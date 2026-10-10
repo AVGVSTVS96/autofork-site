@@ -12,12 +12,12 @@
 <meta property="og:description" content="autopatch rebuilds your fork from upstream every night and replays your patches. When one stops applying, an agent re-implements it from its PATCH.md.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://autopatchmd.vercel.app">
-<meta property="og:image" content="https://autopatchmd.vercel.app/og.png?v=1">
+<meta property="og:image" content="https://autopatchmd.vercel.app/og.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="autopatch: fork anything, keep your changes. Patches replay on upstream every night, and an agent re-implements the ones that stop applying.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://autopatchmd.vercel.app/og.png?v=1">
+<meta name="twitter:image" content="https://autopatchmd.vercel.app/og.png?v=2">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preload" href="/fonts/commit-mono-700.woff2" as="font" type="font/woff2" crossorigin>
@@ -42,7 +42,7 @@
 <main>
 <section class="hero">
   <h1 class="hero-diff diff">
-    <span class="ln hunk" aria-hidden="true">upstream 9503155da67a → 62da1cd48bb4, 1 patch</span>
+    <span class="ln hunk" aria-hidden="true">upstream 9503155da67a → 9afde1c6dbe0, 1 patch</span>
     <span class="ln ctx big">Fork anything.</span>
     <span class="ln add big">Keep your changes.</span>
   </h1>
@@ -108,24 +108,29 @@ baseline: 9503155da67add4fbd7fbc51c99ec19a0c8c4a2c
       <h2 id="s-git">Git first. The agent only when git can't.</h2>
       <p class="s-lede">Patches that still apply go in with a 3-way merge and no model call. Only a broken one wakes the agent.</p>
       <dl class="runstats">
-        <div><dt>upstream commits since the patch was written</dt><dd>382</dd></div>
-        <div><dt>files upstream changed</dt><dd>1,705</dd></div>
-        <div><dt>patches the agent had to rewrite</dt><dd class="g">1</dd></div>
+        <div><dt>upstream commits pulled in</dt><dd>383</dd></div>
+        <div><dt>patches Claude Code had to rewrite</dt><dd class="g">1</dd></div>
+        <div><dt>the whole step, heal and typecheck included</dt><dd>1m55s</dd></div>
       </dl>
+      <a class="runlink" href="https://github.com/AVGVSTVS96/t3code/actions/runs/38093414658">See the real run on GitHub →</a>
     </div>
     <div class="panel term">
-      <div class="panel-head"><b>AVGVSTVS96/t3code</b><span>autopatch sync, Oct 10</span></div>
-<pre><span class="d">upstream's tip isn't green yet, using 62da1cd48bb4</span>
-<span class="d">upstream 9503155da67a → 62da1cd48bb4, 1 patch</span>
+      <div class="panel-head"><b>AVGVSTVS96/t3code</b><span>GitHub Actions, Oct 10</span></div>
+<pre><span class="d">upstream 9503155da67a → 9afde1c6dbe0, 1 patch</span>
 healing window-title
-<span data-sync-rest></span></pre>
+<span class="say">The patch's original hunk no longer applied because upstream had added code around it in `ChatHeader.tsx`. I put the same `useEffect` in `ChatHeader.tsx` right after `activeProjectCwd`, as the patch had it.</span>
+<span class="d">$ tsc --noEmit</span>
+<span class="g">autopatch: sync pingdotgg/t3code to 9afde1c6dbe0</span>
+
+<span class="g">healed window-title</span>
+pushed 85b3a1c414c9 to main, signed by GitHub</pre>
     </div>
   </div>
 </section>
 
 <section class="s" aria-labelledby="s-heal">
   <h2 id="s-heal">Healed from intent, proven by your tests.</h2>
-  <p class="s-lede">Upstream had put new lines right where the old hunk sat. The agent rebuilt the change on today's code from its <code>PATCH.md</code>, and the verify command has to pass before anything lands.</p>
+  <p class="s-lede">The agent rebuilds the change on today's code from its <code>PATCH.md</code>, and your verify command has to pass before anything lands.</p>
   <div class="heal">
     <div class="note">
       <span class="note-k">## Intent</span>
@@ -150,21 +155,21 @@ healing window-title
 <span class="ln ctx new">  const breadcrumbContainerRef = useRef&lt;HTMLDivElement&gt;(null);</span>
 <span class="ln ctx new">  const [collapseParentTitle, setCollapseParentTitle] = useState(false);</span></pre>
     </div>
-    <div class="verify"><code><span class="p">$</span> pnpm --filter @t3tools/web typecheck</code><span class="v-note">If it fails, nothing is committed and the fork stays where it was.</span></div>
+    <div class="verify"><code><span class="p">$</span> pnpm --filter @t3tools/web typecheck</code><span class="ok">✓ passed</span><span class="v-note">If it fails, nothing is committed and the fork stays where it was.</span></div>
   </div>
 </section>
 
-<section class="s" aria-labelledby="s-once" hidden>
+<section class="s" aria-labelledby="s-once">
   <div class="split rev">
     <div>
       <h2 id="s-once">Healed once, plain git after.</h2>
       <p class="s-lede">The rewritten diff goes back into the patch, so the next sync applies it without a model.</p>
     </div>
     <div class="panel">
-      <div class="panel-head"><b>autopatch: sync pingdotgg/t3code to 62da1cd48bb4</b><span>main</span></div>
+      <div class="panel-head"><b>85b3a1c414c9 autopatch: sync pingdotgg/t3code to 9afde1c6dbe0</b><span><a href="https://github.com/AVGVSTVS96/t3code/commit/85b3a1c414c9df91160b8fc28f392da51f151489">signed by GitHub</a></span></div>
 <pre class="diff"><span class="ln file">.autopatch/window-title/PATCH.md</span>
 <span class="ln del">baseline: 9503155da67add4fbd7fbc51c99ec19a0c8c4a2c</span>
-<span class="ln add">baseline: 62da1cd48bb43def11a79cd6aa033dbc478e4dfd</span>
+<span class="ln add">baseline: 9afde1c6dbe00d2b87829732c88789c10f3429c0</span>
 <span class="ln file">.autopatch/window-title/window-title.patch</span>
 <span class="ln del">@@ -77,6 +77,15 @@ export const ChatHeader = memo(function ChatHeader({</span>
 <span class="ln add">@@ -89,6 +89,15 @@ export const ChatHeader = memo(function ChatHeader({</span>
@@ -197,6 +202,7 @@ healing window-title
     <li class="pend"><i></i><code>6e9c5a851c92</code><span>● checks running, tip</span></li>
   </ol>
 <pre class="out"><span class="d">upstream's tip isn't green yet, using 62da1cd48bb4</span></pre>
+  <p class="fn">From a local run the same afternoon, while upstream's newest commit was still being checked.</p>
 </section>
 
 <section class="s" aria-labelledby="s-forks">

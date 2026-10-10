@@ -313,3 +313,8 @@ sup { font: 400 0.7em/0 var(--mono); }
 .commits code { background: none; padding: 0; }
 .out { white-space: pre; overflow: hidden; text-overflow: ellipsis; }
 .verify code { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.term .say { display: block; white-space: pre-wrap; color: var(--ink-3); font-style: italic; border-left: 2px solid var(--hair); padding-left: 1ch; margin: 0.15rem 0; max-width: 62ch; }
+.runlink { display: inline-block; margin-top: 1.25rem; font: 400 0.875rem/1 var(--mono); color: var(--add); }
+.panel-head a { color: var(--add); }
+.files { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 480px) { .md { padding-inline: 1rem; } .md code { white-space: normal; } }
