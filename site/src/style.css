@@ -247,3 +247,69 @@ footer { border-top: 1px solid var(--hair); padding-block: 2.5rem 3rem; }
 
 .wm-del { fill: var(--del-sign); }
 .wm-add { fill: var(--add-sign); }
+
+/* layouts added for the real run */
+.split { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+.split.rev { grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); }
+.split .panel { margin-top: 0.25rem; }
+.runstats { margin: clamp(1.75rem, 3vw, 2.5rem) 0 0; border-top: 1px solid var(--ink); }
+.runstats > div { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid var(--hair); }
+.runstats dt { color: var(--ink-2); font-size: 0.9375rem; }
+.runstats dd { margin: 0; font: 700 1.5rem/1 var(--mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.runstats dd.g { color: var(--add); }
+.heal { grid-template-columns: minmax(0, 0.8fr) auto minmax(0, 1.6fr); align-items: center; }
+.note { border-left: 3px solid var(--ink); padding: 0.25rem 0 0.25rem 1.25rem; }
+.note-k { font: 700 0.8125rem/1 var(--mono); display: block; margin-bottom: 0.75rem; }
+.note p { color: var(--ink-2); font-size: 0.9375rem; text-wrap: pretty; }
+.note p + p { margin-top: 0.6rem; }
+.note code { font-size: 0.86em; }
+.arrow { font: 400 1.5rem/1 var(--mono); color: var(--add-sign); }
+.diff .ctx.new { color: var(--ink); }
+.diff .ctx.new::before { content: "›"; color: var(--hunk); }
+.verify { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; border: 1px solid var(--ink); padding: 0.85rem 1rem; font: 400 0.8125rem/1.3 var(--mono); }
+.verify .p { color: var(--add-sign); margin-right: 1ch; }
+.verify .ok { color: var(--add); font-weight: 700; }
+.verify .v-note { color: var(--ink-3); font-family: var(--sans); font-size: 0.875rem; margin-left: auto; }
+.diff .file { color: var(--ink); font-weight: 700; padding-top: 0.5rem; }
+.diff .file::before { content: ""; }
+.panel pre.diff .file:first-child { padding-top: 0; }
+.retire { margin-top: clamp(2rem, 4vw, 3rem); }
+.retire .diff { padding: 1rem 0; font-size: clamp(0.8125rem, 1.6vw, 1.125rem); line-height: 1.8; overflow-x: auto; }
+.retire .ln { padding-inline: 0.75rem 1.25rem; width: max-content; min-width: 100%; }
+.commits { list-style: none; margin: clamp(2rem, 4vw, 3rem) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); position: relative; }
+.commits::before { content: ""; position: absolute; left: 0; right: 0; top: 7px; height: 2px; background: var(--hair); }
+.commits li { position: relative; padding-top: 1.75rem; font: 400 0.8125rem/1.4 var(--mono); display: grid; gap: 0.35rem; }
+.commits i { position: absolute; top: 0; left: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--bg); border: 2px solid var(--ink-3); }
+.commits .pass i { border-color: var(--add-sign); }
+.commits .pick i { background: var(--add-sign); box-shadow: 0 0 0 4px var(--add-bg); }
+.commits .pend i { border-color: var(--hunk); border-style: dashed; }
+.commits span { color: var(--ink-3); }
+.commits .pass span { color: var(--add); }
+.commits .pick code { font-weight: 700; }
+.commits .pend span { color: var(--hunk); }
+.out { margin: 1.75rem 0 0; font: 400 0.8125rem/1.6 var(--mono); color: var(--ink-3); white-space: pre-wrap; }
+.out::before { content: "$ autopatch sync\A"; color: var(--ink-2); }
+.fn { margin-top: 1.25rem; color: var(--ink-3); font-size: 0.8125rem; max-width: 60rem; }
+.fn a, sup a { color: var(--hunk); text-decoration: none; }
+sup { font: 400 0.7em/0 var(--mono); }
+.setup-note { grid-column: 1 / -1; color: var(--ink-3); font-size: 0.875rem; max-width: 44rem; }
+.setup-note code { font-size: 0.86em; background: var(--bg-2); padding: 0.1em 0.35em; }
+.md ul { margin: 0; padding-left: 1.1rem; }
+.md .fm { white-space: pre; }
+
+@media (max-width: 860px) {
+  .split, .split.rev, .heal { grid-template-columns: minmax(0, 1fr); }
+  .arrow { transform: rotate(90deg); justify-self: start; }
+  .commits { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
+  .commits::before { left: 7px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; }
+  .commits li { padding: 0 0 0 2rem; }
+  .verify .v-note { margin-left: 0; }
+}
+
+.panel-head > * { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.panel-head b { flex: 0 1 auto; }
+.panel-head span { flex: 0 1 auto; text-align: right; }
+.md code { white-space: nowrap; }
+.commits code { background: none; padding: 0; }
+.out { white-space: pre; overflow: hidden; text-overflow: ellipsis; }
+.verify code { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

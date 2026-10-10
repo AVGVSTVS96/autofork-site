@@ -3,7 +3,7 @@ import { defineConfig } from "vite-plus";
 
 const read = (path: string) => JSON.parse(readFileSync(new URL(path, import.meta.url), "utf8"));
 
-type Fork = { repo: string; name: string; upstream: string; patches: number; upstreamCommitsAbsorbed: number; syncCommits: number; heals: number; firstSync: string };
+type Fork = { repo: string; name: string; upstream: string; patches: number; upstreamCommitsAbsorbed: number; heals: number; firstSync: string; lastGreenSync: string };
 
 const month = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
 
@@ -23,9 +23,9 @@ function ledger(forks: Fork[]) {
   <td><a href="https://github.com/${fork.repo}">${fork.repo.split("/")[1]}</a><span class="up">on ${fork.upstream}</span></td>
   <td class="n">${fork.patches}</td>
   <td class="n">${fork.upstreamCommitsAbsorbed}</td>
-  <td class="n">${fork.syncCommits}</td>
   <td class="n heals">${fork.heals}</td>
   <td class="n">${month(fork.firstSync)}</td>
+  <td class="n">${month(fork.lastGreenSync)}</td>
 </tr>`,
     )
     .join("\n");

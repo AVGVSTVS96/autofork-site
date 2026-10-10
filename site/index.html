@@ -33,8 +33,8 @@
 <header class="bar">
   <a href="/" class="bar-mark" aria-label="autopatch"><svg viewBox="0 0 625.2 111" aria-hidden="true"><use href="#wordmark"/></svg></a>
   <nav aria-label="Links">
-    <a href="#setup" class="opt">Set up</a>
-    <a href="https://github.com/AVGVSTVS96/patch.md" class="opt">PATCH.md</a>
+    <a href="#start" class="opt">Start</a>
+    <a href="https://patchmd.vercel.app" class="opt">PATCH.md</a>
     <a href="https://github.com/AVGVSTVS96/autopatch">GitHub</a>
   </nav>
 </header>
@@ -42,7 +42,7 @@
 <main>
 <section class="hero">
   <h1 class="hero-diff diff">
-    <span class="ln hunk" aria-hidden="true">upstream 3f2a91c04be1 → 8b0e44d9a7c2, 4 patches</span>
+    <span class="ln hunk" aria-hidden="true">upstream 9503155da67a → 62da1cd48bb4, 1 patch</span>
     <span class="ln ctx big">Fork anything.</span>
     <span class="ln add big">Keep your changes.</span>
   </h1>
@@ -59,160 +59,204 @@
 </section>
 
 <section class="s" aria-labelledby="s-patch">
-  <h2 id="s-patch">A patch is a note and a diff.</h2>
-  <p class="s-lede"><code>PATCH.md</code> says what your change is for, in plain words. The <code>.patch</code> is how it was done last time. git uses the diff. The agent uses the note.</p>
+  <h2 id="s-patch">A patch is a diff plus what you meant.</h2>
+  <p class="s-lede">Each change lives in <code>.autopatch/&lt;id&gt;/</code>: the git diff, and a <code>PATCH.md</code> that says in plain words what it's for.</p>
   <div class="folder">
-<pre class="tree"><span class="dim">your-fork/</span>
+<pre class="tree"><span class="dim">t3code/</span>
 <span class="dim">└</span> .autopatch/
   <span class="dim">├</span> config.json
-  <span class="dim">├</span> fork-readme/
-  <span class="dim">├</span> <span class="on">pane-border-ids/</span>
-  <span class="dim">│ ├</span> PATCH.md
-  <span class="dim">│ └</span> pane-border-ids.patch
-  <span class="dim">└</span> update-feed/</pre>
+  <span class="dim">└</span> <span class="on">window-title/</span>
+    <span class="dim">├</span> PATCH.md
+    <span class="dim">└</span> window-title.patch</pre>
     <div class="files">
       <div class="md">
-        <div class="fm">.autopatch/pane-border-ids/PATCH.md</div>
+        <div class="fm">---
+summary: The window title shows the active thread
+baseline: 9503155da67add4fbd7fbc51c99ec19a0c8c4a2c
+---</div>
         <h3>Intent</h3>
-        <p>Show each split pane's full ID, like <code>w1:p2</code>, on the right side of its top border, behind a setting that defaults to off.</p>
+        <p>The window (and browser tab) title shows the thread you're looking at, as <code>&lt;thread title&gt; · &lt;project name&gt;</code>, or just the thread title when there's no project. With several T3 Code windows open, the dock, window switcher and tab bar can tell them apart instead of all reading "T3 Code".</p>
         <h3>Invariants</h3>
-        <ol>
-          <li>Use the ID herdr already produces. Never rebuild or shorten it.</li>
-          <li>Never truncate an ID. Truncate the left title instead.</li>
-        </ol>
-        <h3>Verification</h3>
-        <p><code>cargo test</code> passes, and a split shows <code>w1:p2</code> on its border.</p>
+        <ul>
+          <li>Upstream's app title logic (<code>DocumentTitleSync</code>) stays as it is.</li>
+          <li>Renaming a thread updates the title right away.</li>
+        </ul>
       </div>
       <div class="panel">
-        <div class="panel-head"><b>pane-border-ids.patch</b><span>src/config.rs</span></div>
-<pre class="diff"><span class="ln hunk">@@ -212,6 +212,8 @@ pub struct UiConfig {</span>
-<span class="ln ctx">    pub pane_gaps: bool,</span>
-<span class="ln ctx">    pub show_agent_labels_on_pane_borders: bool,</span>
-<span class="ln add">    #[serde(default)]</span>
-<span class="ln add">    pub show_pane_ids_on_pane_borders: bool,</span>
-<span class="ln ctx">    pub tab_bar_right: Vec&lt;String&gt;,</span></pre>
+        <div class="panel-head"><b>window-title.patch</b><span>apps/web/src/components/chat/ChatHeader.tsx</span></div>
+<pre class="diff"><span class="ln hunk">@@ -77,6 +77,15 @@ export const ChatHeader = memo(function ChatHeader({</span>
+<span class="ln ctx">  const activeProjectName = activeProject?.title;</span>
+<span class="ln ctx">  const activeProjectCwd = activeProject?.workspaceRoot ?? null;</span>
+<span class="ln add">  useEffect(() => {</span>
+<span class="ln add">    const appTitle = document.title;</span>
+<span class="ln add">    document.title = activeProjectName</span>
+<span class="ln add">      ? `${activeThreadTitle} · ${activeProjectName}`</span>
+<span class="ln add">      : activeThreadTitle;</span>
+<span class="ln add">    return () => {</span>
+<span class="ln add">      document.title = appTitle;</span>
+<span class="ln add">    };</span>
+<span class="ln add">  }, [activeProjectName, activeThreadTitle]);</span>
+<span class="ln ctx">  const activeThreadRef = useMemo(</span></pre>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" aria-labelledby="s-git">
+  <div class="split">
+    <div>
+      <h2 id="s-git">Git first. The agent only when git can't.</h2>
+      <p class="s-lede">Patches that still apply go in with a 3-way merge and no model call. Only a broken one wakes the agent.</p>
+      <dl class="runstats">
+        <div><dt>upstream commits since the patch was written</dt><dd>382</dd></div>
+        <div><dt>files upstream changed</dt><dd>1,705</dd></div>
+        <div><dt>patches the agent had to rewrite</dt><dd class="g">1</dd></div>
+      </dl>
+    </div>
+    <div class="panel term">
+      <div class="panel-head"><b>AVGVSTVS96/t3code</b><span>autopatch sync, Oct 10</span></div>
+<pre><span class="d">upstream's tip isn't green yet, using 62da1cd48bb4</span>
+<span class="d">upstream 9503155da67a → 62da1cd48bb4, 1 patch</span>
+healing window-title
+<span data-sync-rest></span></pre>
     </div>
   </div>
 </section>
 
 <section class="s" aria-labelledby="s-heal">
-  <h2 id="s-heal">When the diff stops applying, the intent still does.</h2>
-  <p class="s-lede">Upstream moved the code your patch touched, and <code>git apply --3way</code> gives up. The agent reads the intent, writes the change again on the new code, and your verify command has to pass before anything lands.</p>
+  <h2 id="s-heal">Healed from intent, proven by your tests.</h2>
+  <p class="s-lede">Upstream had put new lines right where the old hunk sat. The agent rebuilt the change on today's code from its <code>PATCH.md</code>, and the verify command has to pass before anything lands.</p>
   <div class="heal">
-    <div class="panel stale">
-      <div class="panel-head"><b>pane-border-ids.patch, last week</b><span class="x">✗ doesn't apply</span></div>
-<pre class="diff"><span class="ln hunk">@@ -212,6 +212,8 @@ pub struct UiConfig {</span>
-<span class="ln ctx">    pub pane_gaps: bool,</span>
-<span class="ln ctx"><span class="gone">    pub show_agent_labels_on_pane_borders: bool,</span></span>
-<span class="ln add">    #[serde(default)]</span>
-<span class="ln add">    pub show_pane_ids_on_pane_borders: bool,</span></pre>
-      <div class="step"><span class="x">✗</span><span>upstream moved border labels into <code>BorderLabels</code></span></div>
+    <div class="note">
+      <span class="note-k">## Intent</span>
+      <p>The window (and browser tab) title shows the thread you're looking at, as <code>&lt;thread title&gt; · &lt;project name&gt;</code>.</p>
+      <p>Leaving a thread puts the app's own title back.</p>
     </div>
+    <div class="arrow" aria-hidden="true">→</div>
     <div class="panel healed">
-      <div class="panel-head"><b>pane-border-ids.patch, healed</b><span class="ok">✓ cargo test</span></div>
-<pre class="diff"><span class="ln hunk">@@ -230,6 +230,8 @@ pub struct BorderLabels {</span>
-<span class="ln ctx">    pub agents: bool,</span>
-<span class="ln add">    #[serde(default)]</span>
-<span class="ln add">    pub <mark>pane_ids</mark>: bool,</span>
-<span class="ln ctx">}</span></pre>
-      <div class="step"><span class="ok">✓</span><span>rewritten from the intent, saved back to the patch</span></div>
+      <div class="panel-head"><b>healed by Claude Code</b><span>ChatHeader.tsx</span></div>
+<pre class="diff"><span class="ln hunk">@@ -89,6 +89,15 @@ export const ChatHeader = memo(function ChatHeader({</span>
+<span class="ln ctx">  const activeProjectCwd = activeProject?.workspaceRoot ?? null;</span>
+<span class="ln add">  useEffect(() => {</span>
+<span class="ln add">    const appTitle = document.title;</span>
+<span class="ln add">    document.title = activeProjectName</span>
+<span class="ln add">      ? `${activeThreadTitle} · ${activeProjectName}`</span>
+<span class="ln add">      : activeThreadTitle;</span>
+<span class="ln add">    return () => {</span>
+<span class="ln add">      document.title = appTitle;</span>
+<span class="ln add">    };</span>
+<span class="ln add">  }, [activeProjectName, activeThreadTitle]);</span>
+<span class="ln ctx new">  const interfaceFont = useClientSettings((settings) => settings.fontFamilySans);</span>
+<span class="ln ctx new">  const breadcrumbContainerRef = useRef&lt;HTMLDivElement&gt;(null);</span>
+<span class="ln ctx new">  const [collapseParentTitle, setCollapseParentTitle] = useState(false);</span></pre>
     </div>
-    <div class="panel term">
-      <div class="panel-head"><b>your-fork</b><span>GitHub Actions, 06:17 UTC</span></div>
-<pre><span class="p">$</span> autopatch sync
-<span class="d">upstream 2f9d6b3 → 8b7e04d, 3 patches</span>
-healing pane-border-ids
-<span class="g">autopatch: sync herdrdev/herdr to 8b7e04d</span>
+    <div class="verify"><code><span class="p">$</span> pnpm --filter @t3tools/web typecheck</code><span class="v-note">If it fails, nothing is committed and the fork stays where it was.</span></div>
+  </div>
+</section>
 
-<span class="g">healed pane-border-ids</span></pre>
+<section class="s" aria-labelledby="s-once" hidden>
+  <div class="split rev">
+    <div>
+      <h2 id="s-once">Healed once, plain git after.</h2>
+      <p class="s-lede">The rewritten diff goes back into the patch, so the next sync applies it without a model.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><b>autopatch: sync pingdotgg/t3code to 62da1cd48bb4</b><span>main</span></div>
+<pre class="diff"><span class="ln file">.autopatch/window-title/PATCH.md</span>
+<span class="ln del">baseline: 9503155da67add4fbd7fbc51c99ec19a0c8c4a2c</span>
+<span class="ln add">baseline: 62da1cd48bb43def11a79cd6aa033dbc478e4dfd</span>
+<span class="ln file">.autopatch/window-title/window-title.patch</span>
+<span class="ln del">@@ -77,6 +77,15 @@ export const ChatHeader = memo(function ChatHeader({</span>
+<span class="ln add">@@ -89,6 +89,15 @@ export const ChatHeader = memo(function ChatHeader({</span>
+<span class="ln del">   const activeThreadRef = useMemo(</span>
+<span class="ln add">   const interfaceFont = useClientSettings((settings) => settings.fontFamilySans);</span></pre>
     </div>
   </div>
 </section>
 
-<section class="s" aria-labelledby="s-stack">
-  <h2 id="s-stack">Most nights, no model runs.</h2>
-  <p class="s-lede">Every run rebuilds your fork on upstream's latest and applies your patches in order, with plain git. The agent only wakes up for the one that broke, and its fix is saved, so next time git does it alone.</p>
-  <div class="log-grid">
-    <div class="panel log">
-      <div class="panel-head"><b>git log --graph --oneline</b><span>main</span></div>
-<pre><span class="gr">*  </span> <span class="h">e41c0a2</span> autopatch: sync herdrdev/herdr to 8b7e04d  <span class="g">healed pane-border-ids</span>
-<span class="gr">|\ </span>
-<span class="gr">| *</span> <span class="up">8b7e04d refactor: border labels in one struct</span>
-<span class="gr">* |</span> <span class="h">93d1f7e</span> autopatch: sync herdrdev/herdr to 51ac2e0
-<span class="gr">|\|</span>
-<span class="gr">| *</span> <span class="up">51ac2e0 fix: tab bar width with wide characters</span>
-<span class="gr">* |</span> <span class="h">0c88b14</span> autopatch: sync herdrdev/herdr to 2f9d6b3  <span class="r">dropped update-feed</span>
-<span class="gr">|\|</span>
-<span class="gr">| *</span> <span class="up">2f9d6b3 feat: update feed in settings</span>
-<span class="gr">| *</span> <span class="up">7a3e5d0 docs: config reference</span></pre>
-    </div>
-    <div class="outcomes">
-      <div>
-        <h3><span class="k clean">·</span>Applies cleanly</h3>
-        <p>git does the work. No model is called and nothing is spent.</p>
-      </div>
-      <div>
-        <h3><span class="k heal">+</span>Breaks</h3>
-        <p>An agent rebuilds that patch from its intent. Claude Code by default, any CLI agent works.</p>
-      </div>
-      <div>
-        <h3><span class="k drop">-</span>Upstream shipped it</h3>
-        <p>The patch is dropped, and the commit says why.</p>
-      </div>
+<section class="s band-s" aria-labelledby="s-retire">
+  <h2 id="s-retire">When upstream ships it, the patch retires.</h2>
+  <p class="s-lede">If upstream already does what the intent asks, the agent says how, and the patch is deleted with that reason in the commit.</p>
+  <div class="panel retire">
+    <div class="panel-head"><b>commit message</b><span>example</span></div>
+    <div class="diff">
+      <span class="ln ctx">autopatch: sync owner/repo to 4c1d9e07ab32</span>
+      <span class="ln ctx"> </span>
+      <span class="ln del">dropped retry-login: upstream retries in auth.ts since #4123</span>
     </div>
   </div>
+</section>
+
+<section class="s" aria-labelledby="s-green">
+  <h2 id="s-green">Built on green.</h2>
+  <p class="s-lede">It picks upstream's newest commit whose checks all passed, so a broken upstream main never becomes yours.</p>
+  <ol class="commits" aria-label="pingdotgg/t3code, oldest to newest, when the sync started">
+    <li class="pass"><i></i><code>7e8071f1f156</code><span>✓ green</span></li>
+    <li class="pass"><i></i><code>160b18c8667f</code><span>✓ green</span></li>
+    <li class="pass pick"><i></i><code>62da1cd48bb4</code><span>✓ your fork builds here</span></li>
+    <li class="pend"><i></i><code>6e9c5a851c92</code><span>● checks running, tip</span></li>
+  </ol>
+<pre class="out"><span class="d">upstream's tip isn't green yet, using 62da1cd48bb4</span></pre>
 </section>
 
 <section class="s" aria-labelledby="s-forks">
-  <h2 id="s-forks">Already keeping three forks alive.</h2>
-  <p class="s-lede">Real forks, synced on a schedule. herdr's has absorbed {{forks.2.upstreamCommitsAbsorbed}} upstream commits since July.</p>
+  <h2 id="s-forks">The loop it was packaged from, since July.</h2>
+  <p class="s-lede">Before autopatch, the same loop ran as per-repo scripts in three forks. It pulled in {{totals.upstreamCommitsAbsorbed}} upstream commits, and an agent rewrote patches {{totals.heals}} times along the way.<sup><a href="#fn1" id="fr1">1</a></sup> T3 Code is the first fork on autopatch itself.</p>
   <div class="ledger-wrap">
     <table class="ledger">
-      <thead><tr><th>fork</th><th class="n">patches</th><th class="n">upstream commits</th><th class="n">syncs</th><th class="n">heals</th><th class="n">since</th></tr></thead>
+      <thead><tr><th>fork</th><th class="n">patches</th><th class="n">upstream commits</th><th class="n">heals</th><th class="n">first sync</th><th class="n">last green</th></tr></thead>
       <tbody>
 <!--forks-->
       </tbody>
     </table>
   </div>
+  <p class="fn" id="fn1"><a href="#fr1">1</a> Counted with <code>gh</code> on Oct 10 2026 from each fork's sync commits and patched releases. These forks run the per-repo workflows autopatch replaces. herdr's sync has been failing since mid-September.</p>
+</section>
+
+<section class="s" aria-labelledby="s-lineage">
+  <h2 id="s-lineage">pi-patcher, then PATCH.md, then autopatch.</h2>
+  <p class="s-lede">Self-healing patches for one coding agent in May, a spec for any patch in June, any repo today.</p>
   <div class="lineage">
     <div>
       <span class="when">May 2026</span>
       <h3><a href="https://github.com/AVGVSTVS96/pi-patcher">pi-patcher</a></h3>
-      <p>Self-healing patches for the pi agent. Where the idea started.</p>
+      <p>Self-healing patches for the pi coding agent.</p>
     </div>
     <div>
       <span class="when">June 2026</span>
       <h3><a href="https://patchmd.vercel.app">PATCH.md</a></h3>
-      <p>The pattern, written down as a file format any agent can follow.</p>
+      <p>The format: intent in plain words, beside the diff.</p>
     </div>
     <div>
-      <span class="when">October 2026</span>
-      <h3>autopatch</h3>
-      <p>The same loop as a CLI and a GitHub Action, for any fork.</p>
+      <span class="when">Oct 10 2026</span>
+      <h3><a href="https://github.com/AVGVSTVS96/autopatch">autopatch</a></h3>
+      <p>A CLI and a GitHub Action, for any fork. First on T3 Code.</p>
     </div>
   </div>
 </section>
 
-<section class="s" id="setup" aria-labelledby="s-setup">
-  <h2 id="s-setup">Set it up in your fork.</h2>
-  <p class="s-lede"><code>init</code> writes the config and a nightly workflow. <code>add</code> turns your uncommitted changes into a patch. <code>sync</code> runs the same loop on your machine.</p>
+<section class="s" id="start" aria-labelledby="s-start">
+  <h2 id="s-start">Three commands.</h2>
+  <p class="s-lede">Track upstream, turn your changes into a patch, push.</p>
   <div class="setup">
     <div class="panel term">
-      <div class="panel-head"><b>your-fork</b><span>terminal</span></div>
-<pre><span class="p">$</span> npx github:AVGVSTVS96/autopatch init herdrdev/herdr
-<span class="c">autopatch tracks herdrdev/herdr (main).</span>
-<span class="c">Add a CLAUDE_CODE_OAUTH_TOKEN secret (claude setup-token), commit, and push.</span>
+      <div class="panel-head"><b>t3code</b><span>terminal</span></div>
+<pre><span class="p">$</span> npx github:AVGVSTVS96/autopatch init pingdotgg/t3code
+<span class="c">autopatch tracks pingdotgg/t3code (main).</span>
+<span class="c">Your branch already changes 1 file. Capture them: autopatch add &lt;id&gt;</span>
 
-<span class="p">$</span> autopatch add pane-border-ids
-<span class="c">captured 4 files in .autopatch/pane-border-ids. Write its ## Intent, then commit.</span>
+<span class="p">$</span> npx github:AVGVSTVS96/autopatch add window-title
+<span class="c">captured 1 file in .autopatch/window-title. Write its ## Intent, then commit.</span>
 
-<span class="p">$</span> autopatch sync
-<span class="c">upstream 2f9d6b3 → 8b7e04d, 3 patches</span></pre>
+<span class="p">$</span> npx github:AVGVSTVS96/autopatch status
+<span class="c">pingdotgg/t3code at 9503155da67a, 382 commits behind upstream</span>
+<span class="c">  window-title</span>
+
+<span class="p">$</span> git push</pre>
     </div>
     <div class="panel">
       <div class="panel-head"><b>.github/workflows/autopatch.yml</b><span>written by init</span></div>
-<pre class="setup-yml"><span class="k">on</span>:
+<pre><span class="k">on</span>:
   <span class="k">schedule</span>:
     - <span class="k">cron</span>: "17 6 * * *"
   <span class="k">workflow_dispatch</span>:
@@ -221,12 +265,19 @@ healing pane-border-ids
   <span class="k">sync</span>:
     <span class="k">runs-on</span>: ubuntu-latest
     <span class="k">steps</span>:
-      - <span class="k">uses</span>: actions/checkout@v6
-        <span class="k">with</span>: { <span class="k">fetch-depth</span>: 0 }
+      - <span class="k">uses</span>: actions/checkout@v7
+        <span class="k">with</span>:
+          <span class="k">fetch-depth</span>: 0
+          <span class="k">persist-credentials</span>: false
+      - <span class="k">uses</span>: pnpm/action-setup@v6
+      - <span class="k">uses</span>: actions/setup-node@v7
+        <span class="k">with</span>:
+          <span class="k">node-version</span>: 24
 <span class="hl">      - <span class="k">uses</span>: AVGVSTVS96/autopatch@v1</span>
         <span class="k">env</span>:
           <span class="k">CLAUDE_CODE_OAUTH_TOKEN</span>: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}</pre>
     </div>
+    <p class="setup-note">Runs nightly as a GitHub Action. Heals with Claude Code; set <code>agent</code> in <code>.autopatch/config.json</code> to Codex or any CLI agent that takes a prompt on stdin.</p>
   </div>
 </section>
 </main>
