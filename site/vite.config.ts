@@ -21,11 +21,11 @@ function ledger(forks: Fork[]) {
     .map(
       (fork) => `<tr>
   <td><a href="https://github.com/${fork.repo}">${fork.repo.split("/")[1]}</a><span class="up">on ${fork.upstream}</span></td>
-  <td class="n">${fork.patches}</td>
-  <td class="n">${fork.upstreamCommitsAbsorbed}</td>
-  <td class="n heals">${fork.heals}</td>
-  <td class="n">${month(fork.firstSync)}</td>
-  <td class="n">${month(fork.lastGreenSync)}</td>
+  <td class="n" data-l="patches">${fork.patches}</td>
+  <td class="n" data-l="upstream commits">${fork.upstreamCommitsAbsorbed}</td>
+  <td class="n heals${fork.heals ? "" : " zero"}" data-l="heals">${fork.heals}</td>
+  <td class="n" data-l="first sync">${month(fork.firstSync)}</td>
+  <td class="n" data-l="last green">${month(fork.lastGreenSync)}</td>
 </tr>`,
     )
     .join("\n");

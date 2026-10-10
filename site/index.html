@@ -156,7 +156,7 @@ pushed 85b3a1c414c9 to main, signed by GitHub</pre>
 <span class="ln ctx new">  const breadcrumbContainerRef = useRef&lt;HTMLDivElement&gt;(null);</span>
 <span class="ln ctx new">  const [collapseParentTitle, setCollapseParentTitle] = useState(false);</span></pre>
     </div>
-    <div class="verify"><code><span class="p">$</span> pnpm --filter @t3tools/web typecheck</code><span class="ok">✓ passed</span><span class="v-note">If it fails, nothing is committed and the fork stays where it was.</span></div>
+    <div class="verify"><code><span class="p">$</span> pnpm --filter @t3tools/web typecheck</code><span class="ok">passed</span><span class="v-note">If it fails, nothing is committed and the fork stays where it was.</span></div>
   </div>
 </section>
 
@@ -183,13 +183,10 @@ pushed 85b3a1c414c9 to main, signed by GitHub</pre>
 <section class="s band-s" aria-labelledby="s-retire">
   <h2 id="s-retire">When upstream ships it, the patch retires.</h2>
   <p class="s-lede">If upstream already does what the intent asks, the agent says how, and the patch is deleted with that reason in the commit.</p>
-  <div class="panel retire">
-    <div class="panel-head"><b>commit message</b><span>example</span></div>
-    <div class="diff">
-      <span class="ln ctx">autopatch: sync owner/repo to 4c1d9e07ab32</span>
-      <span class="ln ctx"> </span>
-      <span class="ln del">dropped retry-login: upstream retries in auth.ts since #4123</span>
-    </div>
+  <div class="retire diff">
+    <span class="ln hunk">example commit message</span>
+    <span class="ln ctx">autopatch: sync owner/repo to 4c1d9e07ab32</span>
+    <span class="ln del big-2">dropped retry-login: upstream retries in auth.ts since #4123</span>
   </div>
 </section>
 
@@ -197,10 +194,10 @@ pushed 85b3a1c414c9 to main, signed by GitHub</pre>
   <h2 id="s-green">Built on green.</h2>
   <p class="s-lede">It picks upstream's newest commit whose checks all passed, so a broken upstream main never becomes yours.</p>
   <ol class="commits" aria-label="pingdotgg/t3code, oldest to newest, when the sync started">
-    <li class="pass"><i></i><code>7e8071f1f156</code><span>✓ green</span></li>
-    <li class="pass"><i></i><code>160b18c8667f</code><span>✓ green</span></li>
-    <li class="pass pick"><i></i><code>62da1cd48bb4</code><span>✓ your fork builds here</span></li>
-    <li class="pend"><i></i><code>6e9c5a851c92</code><span>● checks running, tip</span></li>
+    <li class="pass"><i></i><code>7e8071f1f156</code><span>green</span></li>
+    <li class="pass"><i></i><code>160b18c8667f</code><span>green</span></li>
+    <li class="pass pick"><i></i><code>62da1cd48bb4</code><span>green, your fork builds here</span></li>
+    <li class="pend"><i></i><code>6e9c5a851c92</code><span>tip, checks running</span></li>
   </ol>
 <pre class="out"><span class="d">upstream's tip isn't green yet, using 62da1cd48bb4</span></pre>
   <p class="fn">From a local run the same afternoon, while upstream's newest commit was still being checked.</p>
