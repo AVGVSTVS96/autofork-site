@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>autopatch · keep your fork alive</title>
+<meta name="description" content="autopatch keeps your changes on top of someone else's repo. Each change is a PATCH.md and a diff. When upstream moves and a diff stops applying, an agent rebuilds it from its intent, your verify command proves it, and your fork's main gets a signed commit.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FBFBFA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0D0C" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="autopatch · keep your fork alive">
+<meta property="og:description" content="Your changes on someone else's repo, kept alive. When upstream breaks a patch, an agent rebuilds it from your intent.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://autopatchmd.vercel.app">
+<meta property="og:image" content="https://autopatchmd.vercel.app/og.png?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A diff: minus, who's gonna maintain the fork? Plus, the agent is. autopatch.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://autopatchmd.vercel.app/og.png?v=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/commit-mono-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/commit-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/instrument-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><!--wordmark--></svg>
+
+<div class="wrap">
+<header class="bar">
+  <a href="/" class="bar-mark" aria-label="autopatch"><svg viewBox="0 0 625.2 111" aria-hidden="true"><use href="#wordmark"/></svg></a>
+  <nav aria-label="Links">
+    <a href="#setup" class="opt">Set up</a>
+    <a href="https://github.com/AVGVSTVS96/patch.md" class="opt">PATCH.md</a>
+    <a href="https://github.com/AVGVSTVS96/autopatch">GitHub</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-diff diff" id="hero-title" role="heading" aria-level="1">
+    <span class="ln hunk">@@ your fork, 315 upstream commits later @@</span>
+    <span class="ln del big"><span class="t">who's gonna maintain the fork?</span></span>
+    <span class="ln add big"><span class="t">the agent is.</span></span>
+  </div>
+  <div class="hero-foot">
+    <p class="lede">autopatch keeps your changes on top of someone else's repo. When upstream breaks a patch, <strong>an agent rebuilds it from the intent you wrote down.</strong></p>
+    <div>
+      <div class="cmd">
+        <code><span class="p">$</span>npx github:AVGVSTVS96/autopatch init owner/repo</code>
+        <button type="button" data-copy="npx github:AVGVSTVS96/autopatch init owner/repo">copy</button>
+      </div>
+      <div class="hero-links"><a href="https://github.com/AVGVSTVS96/autopatch">Read the README →</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="s" aria-labelledby="s-patch">
+  <h2 id="s-patch">A patch is a note and a diff.</h2>
+  <p class="s-lede"><code>PATCH.md</code> says what your change is for, in plain words. The <code>.patch</code> is how it was done last time. git uses the diff. The agent uses the note.</p>
+  <div class="folder">
+<pre class="tree"><span class="dim">your-fork/</span>
+<span class="dim">└</span> .autopatch/
+  <span class="dim">├</span> config.json
+  <span class="dim">├</span> fork-readme/
+  <span class="dim">├</span> <span class="on">pane-border-ids/</span>
+  <span class="dim">│ ├</span> PATCH.md
+  <span class="dim">│ └</span> pane-border-ids.patch
+  <span class="dim">└</span> update-feed/</pre>
+    <div class="files">
+      <div class="md">
+        <div class="fm">.autopatch/pane-border-ids/PATCH.md</div>
+        <h3>Intent</h3>
+        <p>Show each split pane's full ID, like <code>w1:p2</code>, on the right side of its top border, behind a setting that defaults to off.</p>
+        <h3>Invariants</h3>
+        <ol>
+          <li>Use the ID herdr already produces. Never rebuild or shorten it.</li>
+          <li>Never truncate an ID. Truncate the left title instead.</li>
+        </ol>
+        <h3>Verification</h3>
+        <p><code>cargo test</code> passes, and a split shows <code>w1:p2</code> on its border.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><b>pane-border-ids.patch</b><span>src/config.rs</span></div>
+<pre class="diff"><span class="ln hunk">@@ -212,6 +212,8 @@ pub struct UiConfig {</span>
+<span class="ln ctx">    pub pane_gaps: bool,</span>
+<span class="ln ctx">    pub show_agent_labels_on_pane_borders: bool,</span>
+<span class="ln add">    #[serde(default)]</span>
+<span class="ln add">    pub show_pane_ids_on_pane_borders: bool,</span>
+<span class="ln ctx">    pub tab_bar_right: Vec&lt;String&gt;,</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" aria-labelledby="s-heal">
+  <h2 id="s-heal">When the diff stops applying, the intent still does.</h2>
+  <p class="s-lede">Upstream moved the code your patch touched, and <code>git apply --3way</code> gives up. The agent reads the intent, writes the change again on the new code, and your verify command has to pass before anything lands.</p>
+  <div class="heal">
+    <div class="panel stale">
+      <div class="panel-head"><b>pane-border-ids.patch, last week</b><span class="x">✗ doesn't apply</span></div>
+<pre class="diff"><span class="ln hunk">@@ -212,6 +212,8 @@ pub struct UiConfig {</span>
+<span class="ln ctx">    pub pane_gaps: bool,</span>
+<span class="ln ctx"><span class="gone">    pub show_agent_labels_on_pane_borders: bool,</span></span>
+<span class="ln add">    #[serde(default)]</span>
+<span class="ln add">    pub show_pane_ids_on_pane_borders: bool,</span></pre>
+      <div class="step"><span class="x">✗</span><span>upstream moved border labels into <code>BorderLabels</code></span></div>
+    </div>
+    <div class="panel healed">
+      <div class="panel-head"><b>pane-border-ids.patch, healed</b><span class="ok">✓ cargo test</span></div>
+<pre class="diff"><span class="ln hunk">@@ -230,6 +230,8 @@ pub struct BorderLabels {</span>
+<span class="ln ctx">    pub agents: bool,</span>
+<span class="ln add">    #[serde(default)]</span>
+<span class="ln add">    pub <mark>pane_ids</mark>: bool,</span>
+<span class="ln ctx">}</span></pre>
+      <div class="step"><span class="ok">✓</span><span>rewritten from the intent, saved back to the patch</span></div>
+    </div>
+    <div class="panel term">
+      <div class="panel-head"><b>your-fork</b><span>GitHub Actions, 06:17 UTC</span></div>
+<pre><span class="p">$</span> autopatch sync
+<span class="d">upstream 2f9d6b3 → 8b7e04d, 3 patches</span>
+healing pane-border-ids
+<span class="g">autopatch: sync herdrdev/herdr to 8b7e04d</span>
+
+<span class="g">healed pane-border-ids</span></pre>
+    </div>
+  </div>
+</section>
+
+<section class="s" aria-labelledby="s-stack">
+  <h2 id="s-stack">Most nights, no model runs.</h2>
+  <p class="s-lede">Every run rebuilds your fork on upstream's latest and applies your patches in order, with plain git. The agent only wakes up for the one that broke, and its fix is saved, so next time git does it alone.</p>
+  <div class="log-grid">
+    <div class="panel log">
+      <div class="panel-head"><b>git log --graph --oneline</b><span>main</span></div>
+<pre><span class="gr">*  </span> <span class="h">e41c0a2</span> autopatch: sync herdrdev/herdr to 8b7e04d  <span class="g">healed pane-border-ids</span>
+<span class="gr">|\ </span>
+<span class="gr">| *</span> <span class="up">8b7e04d refactor: border labels in one struct</span>
+<span class="gr">* |</span> <span class="h">93d1f7e</span> autopatch: sync herdrdev/herdr to 51ac2e0
+<span class="gr">|\|</span>
+<span class="gr">| *</span> <span class="up">51ac2e0 fix: tab bar width with wide characters</span>
+<span class="gr">* |</span> <span class="h">0c88b14</span> autopatch: sync herdrdev/herdr to 2f9d6b3  <span class="r">dropped update-feed</span>
+<span class="gr">|\|</span>
+<span class="gr">| *</span> <span class="up">2f9d6b3 feat: update feed in settings</span>
+<span class="gr">| *</span> <span class="up">7a3e5d0 docs: config reference</span></pre>
+    </div>
+    <div class="outcomes">
+      <div>
+        <h3><span class="k clean">·</span>Applies cleanly</h3>
+        <p>git does the work. No model is called and nothing is spent.</p>
+      </div>
+      <div>
+        <h3><span class="k heal">+</span>Breaks</h3>
+        <p>An agent rebuilds that patch from its intent. Claude Code by default, any CLI agent works.</p>
+      </div>
+      <div>
+        <h3><span class="k drop">-</span>Upstream shipped it</h3>
+        <p>The patch is dropped, and the commit says why.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" aria-labelledby="s-forks">
+  <h2 id="s-forks">Already keeping three forks alive.</h2>
+  <p class="s-lede">Real forks, synced on a schedule. herdr's has absorbed {{forks.2.upstreamCommitsAbsorbed}} upstream commits since July.</p>
+  <div class="ledger-wrap">
+    <table class="ledger">
+      <thead><tr><th>fork</th><th class="n">patches</th><th class="n">upstream commits</th><th class="n">syncs</th><th class="n">heals</th><th class="n">since</th></tr></thead>
+      <tbody>
+<!--forks-->
+      </tbody>
+    </table>
+  </div>
+  <div class="lineage">
+    <div>
+      <span class="when">May 2026</span>
+      <h3><a href="https://github.com/AVGVSTVS96/pi-patcher">pi-patcher</a></h3>
+      <p>Self-healing patches for the pi agent. Where the idea started.</p>
+    </div>
+    <div>
+      <span class="when">June 2026</span>
+      <h3><a href="https://patchmd.vercel.app">PATCH.md</a></h3>
+      <p>The pattern, written down as a file format any agent can follow.</p>
+    </div>
+    <div>
+      <span class="when">October 2026</span>
+      <h3>autopatch</h3>
+      <p>The same loop as a CLI and a GitHub Action, for any fork.</p>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="setup" aria-labelledby="s-setup">
+  <h2 id="s-setup">Set it up in your fork.</h2>
+  <p class="s-lede"><code>init</code> writes the config and a nightly workflow. <code>add</code> turns your uncommitted changes into a patch. <code>sync</code> runs the same loop on your machine.</p>
+  <div class="setup">
+    <div class="panel term">
+      <div class="panel-head"><b>your-fork</b><span>terminal</span></div>
+<pre><span class="p">$</span> npx github:AVGVSTVS96/autopatch init herdrdev/herdr
+<span class="c">autopatch tracks herdrdev/herdr (main).</span>
+<span class="c">Add a CLAUDE_CODE_OAUTH_TOKEN secret (claude setup-token), commit, and push.</span>
+
+<span class="p">$</span> autopatch add pane-border-ids
+<span class="c">captured 4 files in .autopatch/pane-border-ids. Write its ## Intent, then commit.</span>
+
+<span class="p">$</span> autopatch sync
+<span class="c">upstream 2f9d6b3 → 8b7e04d, 3 patches</span></pre>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><b>.github/workflows/autopatch.yml</b><span>written by init</span></div>
+<pre class="setup-yml"><span class="k">on</span>:
+  <span class="k">schedule</span>:
+    - <span class="k">cron</span>: "17 6 * * *"
+  <span class="k">workflow_dispatch</span>:
+
+<span class="k">jobs</span>:
+  <span class="k">sync</span>:
+    <span class="k">runs-on</span>: ubuntu-latest
+    <span class="k">steps</span>:
+      - <span class="k">uses</span>: actions/checkout@v6
+        <span class="k">with</span>: { <span class="k">fetch-depth</span>: 0 }
+<span class="hl">      - <span class="k">uses</span>: AVGVSTVS96/autopatch@v1</span>
+        <span class="k">env</span>:
+          <span class="k">CLAUDE_CODE_OAUTH_TOKEN</span>: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}</pre>
+    </div>
+  </div>
+</section>
+</main>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <svg viewBox="0 0 625.2 111" role="img" aria-label="autopatch"><use href="#wordmark"/></svg>
+    <nav aria-label="Footer">
+      <a href="https://github.com/AVGVSTVS96/autopatch">GitHub</a>
+      <a href="https://patchmd.vercel.app">PATCH.md</a>
+      <a href="https://github.com/AVGVSTVS96/pi-patcher">pi-patcher</a>
+      <a href="https://x.com/AVGVSTVS96">@AVGVSTVS96</a>
+    </nav>
+  </div>
+</footer>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

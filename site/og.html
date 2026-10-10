@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Commit Mono"; src: url("/fonts/commit-mono-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Commit Mono"; src: url("/fonts/commit-mono-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Instrument Sans"; src: url("/fonts/instrument-sans-var.woff2") format("woff2"); font-weight: 400 700; }
+html, body { margin: 0; }
+body { width: 1200px; height: 630px; background: #fbfbfa; color: #101312; font-family: "Commit Mono", monospace; font-variant-ligatures: none; position: relative; overflow: hidden; }
+.mark { position: absolute; left: 64px; top: 58px; height: 46px; }
+.diff { position: absolute; left: 0; right: 0; top: 168px; }
+.ln { display: grid; grid-template-columns: 40px 1fr; column-gap: 18px; padding: 0 64px; white-space: nowrap; }
+.hunk { background: #e5f0fa; color: #1d64a8; font-size: 22px; line-height: 50px; grid-template-columns: 1fr; }
+.big { font-size: 66px; font-weight: 700; letter-spacing: -0.045em; line-height: 104px; }
+.big::before { font-weight: 400; text-align: center; }
+.del { background: #fde8e4; } .del::before { content: "-"; color: #d7402c; }
+.add { background: #e1f5e7; } .add::before { content: "+"; color: #1c9a50; }
+.sub { position: absolute; left: 64px; top: 452px; font: 400 27px/1.3 "Instrument Sans", sans-serif; color: #4a514e; letter-spacing: -0.005em; }
+</style>
+</head>
+<body>
+<img class="mark" src="../brand/logo/autopatch.svg" alt="">
+<div class="diff">
+  <div class="ln hunk">@@ your fork, 315 upstream commits later @@</div>
+  <div class="ln big del">who's gonna maintain the fork?</div>
+  <div class="ln big add">the agent is.</div>
+</div>
+<p class="sub">autopatch keeps your changes alive on someone else's repo.</p>
+</body>
+</html>

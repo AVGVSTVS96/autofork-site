@@ -1,0 +1,6 @@
+node_modules
+dist
+.scratch
+.vercel
+.env*.local
+shots

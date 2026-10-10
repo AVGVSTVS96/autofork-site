@@ -1,0 +1,5 @@
+{
+  "buildCommand": "vp build",
+  "outputDirectory": "dist",
+  "installCommand": "bun install"
+}
