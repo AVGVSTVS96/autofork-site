@@ -109,11 +109,12 @@ h1, h2, h3, p { margin: 0; }
 
 /* hero */
 .hero { padding-block: clamp(3rem, 9vw, 7rem) clamp(3rem, 7vw, 5.5rem); }
-.hero-diff { margin-inline: calc(var(--gutter) * -1); }
+.hero-diff { margin: 0 calc(var(--gutter) * -1); font-weight: inherit; }
 .hero-diff .ln { padding-inline: var(--gutter); grid-template-columns: 1.25ch 1fr; column-gap: clamp(0.5rem, 2vw, 1.5rem); }
 .hero-diff .hunk { font-size: clamp(0.75rem, 1.4vw, 0.9375rem); padding-block: 0.5rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
 .hero-diff .big { font-size: clamp(1.6rem, 4.6vw, 4rem); font-weight: 700; letter-spacing: -0.045em; line-height: 1.12; padding-block: 0.12em; white-space: normal; }
 .hero-diff .big::before { font-weight: 400; }
+.hero-diff .ctx.big { color: var(--ink); }
 .hero-diff .add.big { animation: land 320ms var(--ease) 600ms both; }
 @keyframes land { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 

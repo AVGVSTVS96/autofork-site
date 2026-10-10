@@ -1,0 +1,6 @@
+.scratch
+shots
+node_modules
+brand/node_modules
+site/node_modules
+site/dist

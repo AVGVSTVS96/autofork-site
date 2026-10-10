@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>autopatch · keep your fork alive</title>
-<meta name="description" content="autopatch keeps your changes on top of someone else's repo. Each change is a PATCH.md and a diff. When upstream moves and a diff stops applying, an agent rebuilds it from its intent, your verify command proves it, and your fork's main gets a signed commit.">
+<title>autopatch: fork anything, keep your changes</title>
+<meta name="description" content="autopatch rebuilds your fork from upstream every night and replays your patches. When one stops applying, an agent re-implements it from its PATCH.md.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#FBFBFA" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0B0D0C" media="(prefers-color-scheme: dark)">
-<meta property="og:title" content="autopatch · keep your fork alive">
-<meta property="og:description" content="Your changes on someone else's repo, kept alive. When upstream breaks a patch, an agent rebuilds it from your intent.">
+<meta property="og:title" content="autopatch: fork anything, keep your changes">
+<meta property="og:description" content="autopatch rebuilds your fork from upstream every night and replays your patches. When one stops applying, an agent re-implements it from its PATCH.md.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://autopatchmd.vercel.app">
 <meta property="og:image" content="https://autopatchmd.vercel.app/og.png?v=1">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="A diff: minus, who's gonna maintain the fork? Plus, the agent is. autopatch.">
+<meta property="og:image:alt" content="autopatch: fork anything, keep your changes. Patches replay on upstream every night, and an agent re-implements the ones that stop applying.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://autopatchmd.vercel.app/og.png?v=1">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -40,14 +40,14 @@
 </header>
 
 <main>
-<section class="hero" aria-labelledby="hero-title">
-  <div class="hero-diff diff" id="hero-title" role="heading" aria-level="1">
-    <span class="ln hunk">@@ your fork, 315 upstream commits later @@</span>
-    <span class="ln del big"><span class="t">who's gonna maintain the fork?</span></span>
-    <span class="ln add big"><span class="t">the agent is.</span></span>
-  </div>
+<section class="hero">
+  <h1 class="hero-diff diff">
+    <span class="ln hunk" aria-hidden="true">upstream 3f2a91c04be1 → 8b0e44d9a7c2, 4 patches</span>
+    <span class="ln ctx big">Fork anything.</span>
+    <span class="ln add big">Keep your changes.</span>
+  </h1>
   <div class="hero-foot">
-    <p class="lede">autopatch keeps your changes on top of someone else's repo. When upstream breaks a patch, <strong>an agent rebuilds it from the intent you wrote down.</strong></p>
+    <p class="lede">Your patches replay on upstream every night, and <strong>an agent re-implements the ones that stop applying.</strong></p>
     <div>
       <div class="cmd">
         <code><span class="p">$</span>npx github:AVGVSTVS96/autopatch init owner/repo</code>
