@@ -318,3 +318,4 @@ sup { font: 400 0.7em/0 var(--mono); }
 .panel-head a { color: var(--add); }
 .files { grid-template-columns: minmax(0, 1fr); }
 @media (max-width: 480px) { .md { padding-inline: 1rem; } .md code { white-space: normal; } }
+.note code { white-space: nowrap; }
