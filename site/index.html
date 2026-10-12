@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>autopatch: fork anything, keep your changes</title>
-<meta name="description" content="autopatch keeps your fork on top of upstream. When upstream breaks one of your changes, an agent rebuilds it.">
+<meta name="description" content="Tell your agent what to change. autopatch keeps it working through every upstream release.">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#FBFBFA" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0B0D0C" media="(prefers-color-scheme: dark)">
 <meta property="og:title" content="autopatch: fork anything, keep your changes">
-<meta property="og:description" content="autopatch keeps your fork on top of upstream. When upstream breaks one of your changes, an agent rebuilds it.">
+<meta property="og:description" content="Tell your agent what to change. autopatch keeps it working through every upstream release.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://autopatchmd.vercel.app">
 <meta property="og:image" content="https://autopatchmd.vercel.app/og.png?v=3">
@@ -27,24 +27,20 @@
 <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
-
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <!--wordmark-->
   <symbol id="i-ok" viewBox="0 0 16 16"><path d="M4 8.2 6.8 11 12 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-broke" viewBox="0 0 16 16"><path d="M5 5l6 6M11 5l-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
-  <symbol id="i-git" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M1.5 8h3.9M10.6 8h3.9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
-  <symbol id="i-tag" viewBox="0 0 16 16"><path d="M2.5 3.2v4.1l6.2 6.2 4.8-4.8-6.2-6.2H3.2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="5.6" cy="5.6" r="1.1" fill="currentColor"/></symbol>
   <symbol id="i-agent" viewBox="0 0 16 16"><path d="M8 2.2v3.2M8 10.6v3.2M2.2 8h3.2M10.6 8h3.2M3.9 3.9l2.2 2.2M9.9 9.9l2.2 2.2M12.1 3.9 9.9 6.1M6.1 9.9l-2.2 2.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-compact" viewBox="0 0 16 16"><path d="M9.5 2.5v4h4M6.5 13.5v-4h-4M9.5 6.5l4.5-4.5M6.5 9.5 2 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-up" viewBox="0 0 16 16"><path d="M8 13V3.5M3.8 7.6 8 3.4l4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
 </svg>
 
 <div class="wrap">
 <header class="bar">
   <a href="/" class="bar-mark" aria-label="autopatch"><svg viewBox="0 0 625.2 111" aria-hidden="true"><use href="#wordmark"/></svg></a>
   <nav aria-label="Links">
-    <a href="#patches" class="opt">Patches</a>
-    <a href="#agents" class="opt">Agents</a>
-    <a href="#updates" class="opt">Updates</a>
-    <a href="#config" class="opt">Config</a>
+    <a href="#start" class="opt">Get started</a>
+    <a href="https://github.com/AVGVSTVS96/autopatch#commands" class="opt">Docs</a>
     <a href="https://github.com/AVGVSTVS96/autopatch">GitHub</a>
   </nav>
 </header>
@@ -56,191 +52,173 @@
     <span class="ln add big">Keep your changes.</span>
   </h1>
   <div class="hero-foot">
-    <p class="lede">autopatch keeps your fork on top of upstream. When upstream breaks one of your changes, an agent rebuilds it.</p>
-    <div class="hero-go">
-      <div class="cmd">
-        <code><span class="p">$</span>npx github:AVGVSTVS96/autopatch fork pingdotgg/t3code</code>
-        <button type="button" data-copy="npx github:AVGVSTVS96/autopatch fork pingdotgg/t3code">copy</button>
-      </div>
-      <div class="hero-links"><a href="#start">Get started</a><a href="https://github.com/AVGVSTVS96/autopatch">GitHub</a></div>
+    <p class="lede">Tell your agent what to change. autopatch keeps it working through every upstream release.</p>
+    <div class="cmd">
+      <code><span class="p">$</span>npx skills add AVGVSTVS96/autopatch</code>
+      <button type="button" data-copy="npx skills add AVGVSTVS96/autopatch">copy</button>
     </div>
   </div>
 
-  <figure class="show">
-    <div class="card">
-      <div class="card-head"><b>window-title/PATCH.md</b></div>
-      <div class="prose">
-        <p>The window (and browser tab) title shows the thread you're looking at, as <code>&lt;thread title&gt; · &lt;project name&gt;</code>, or just the thread title when there's no project. With several T3 Code windows open, the dock, window switcher and tab bar can tell them apart instead of all reading "T3 Code".</p>
-        <p>Leaving a thread puts the app's own title back, so views without a thread (settings, the new thread screen) look the way upstream made them. Renaming a thread updates the title right away.</p>
+  <figure class="demo">
+    <div class="ask">
+      <p class="who">You</p>
+      <p class="said">Fork T3 Code with autopatch. Always show context usage in the composer, and put the thread's title in the window and tab title.</p>
+      <div class="made">
+        <p class="who">.autopatch/</p>
+        <div class="diff rows">
+          <span class="ln add"><b>context-usage</b></span>
+          <span class="ln add"><b>window-title</b></span>
+        </div>
       </div>
     </div>
-    <div class="card run">
-      <div class="card-head"><b>AVGVSTVS96/t3code</b><span>1m 55s</span></div>
-      <ol>
-        <li class="ok"><svg><use href="#i-ok"/></svg><span>Pulled <b>383 commits</b> from pingdotgg/t3code</span></li>
-        <li class="broke"><svg><use href="#i-broke"/></svg><span><b>window-title</b> no longer applied</span></li>
-        <li class="heal"><svg><use href="#i-agent"/></svg><span>Claude Code rebuilt it from its PATCH.md<q>I put the same useEffect in ChatHeader.tsx right after activeProjectCwd, as the patch had it.</q></span></li>
-        <li class="ok"><svg><use href="#i-ok"/></svg><span>Typecheck passed</span></li>
-        <li class="ok"><svg><use href="#i-ok"/></svg><span>Pushed a signed commit</span></li>
-      </ol>
+    <div class="app" aria-label="T3 Code with both changes">
+      <div class="app-bar">
+        <i></i><i></i><i></i>
+        <span class="mark-on">Fix login redirect · t3code<em>window-title</em></span>
+      </div>
+      <div class="app-body">
+        <div class="app-side"><b></b><span>Fix login redirect</span><span>Add a dark mode toggle</span><span>Bump dependencies</span></div>
+        <div class="app-main">
+          <div class="msg you"></div>
+          <div class="msg them"><span></span><span></span><span></span></div>
+          <div class="composer">
+            <p>Ask anything</p>
+            <div class="composer-row">
+              <span class="model">Claude Opus 5.5</span>
+              <span class="ctx-pill mark-on"><svg><use href="#i-compact"/></svg>33k<em>context-usage</em>
+                <span class="tip">Next send keeps all 33k tokens. Click to compact first<br>Prompt cache warm, 59m left</span>
+              </span>
+              <span class="send"><svg><use href="#i-up"/></svg></span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <figcaption>A real run on my T3 Code fork. <a href="https://github.com/AVGVSTVS96/t3code/actions/runs/38093414658">See it on GitHub</a></figcaption>
   </figure>
 </section>
 
-<section class="s" id="start" aria-labelledby="s-start">
+<section class="s band" aria-labelledby="s-releases">
+  <h2 id="s-releases">Every release, your changes go back on top.</h2>
+  <p class="s-lede">Most apply with git. Your agent only runs when one breaks.</p>
+  <figure class="flow" aria-label="Three upstream releases and what happens to each patch">
+    <ol class="stacks">
+      <li>
+        <div class="diff rows">
+          <span class="ln add"><b>context-usage</b><i class="ok"><svg><use href="#i-ok"/></svg></i></span>
+          <span class="ln add"><b>window-title</b><i class="ok"><svg><use href="#i-ok"/></svg></i></span>
+        </div>
+        <p>Both apply.</p>
+      </li>
+      <li>
+        <div class="diff rows">
+          <span class="ln add"><b>context-usage</b><i class="ok"><svg><use href="#i-ok"/></svg></i></span>
+          <span class="ln heal"><b>window-title</b><i class="agent"><svg><use href="#i-agent"/></svg></i></span>
+        </div>
+        <p>One breaks. Your agent rebuilds it.</p>
+      </li>
+      <li>
+        <div class="diff rows">
+          <span class="ln del"><b>context-usage</b></span>
+          <span class="ln add"><b>window-title</b><i class="ok"><svg><use href="#i-ok"/></svg></i></span>
+        </div>
+        <p>Upstream ships it. Dropped.</p>
+      </li>
+    </ol>
+    <div class="track" aria-hidden="true">
+      <span class="up">upstream</span>
+      <span class="rel"></span><span class="rel"></span><span class="rel"></span>
+    </div>
+  </figure>
+  <p class="s-note">Nightlies are skipped. Your checks run before anything is pushed.</p>
+</section>
+
+<section class="s" aria-labelledby="s-patch">
   <div class="split">
     <div>
-      <h2 id="s-start">One command.</h2>
-      <p class="s-lede">It forks the repo, clones it and adds the workflow. Set <code>CLAUDE_CODE_OAUTH_TOKEN</code> first and it adds that secret too.</p>
-      <p class="s-note">Already have a fork? Run <code>init owner/repo</code> inside it.</p>
+      <h2 id="s-patch">A patch is a folder.</h2>
+      <p class="s-lede">What it does in plain words, and the diff. When the diff stops fitting, your agent rebuilds it from the words.</p>
+      <a class="more" href="https://github.com/AVGVSTVS96/t3code/tree/main/.autopatch/context-usage">See it on GitHub</a>
     </div>
-    <div class="card term">
-<pre><span class="p">$</span> npx github:AVGVSTVS96/autopatch fork pingdotgg/t3code
-<span class="o">autopatch follows pingdotgg/t3code's releases.</span>
-<span class="o">AVGVSTVS96/t3code now keeps itself current with pingdotgg/t3code. It's cloned in ./t3code.</span></pre>
-    </div>
-  </div>
-</section>
-
-<section class="s" id="patches" aria-labelledby="s-patches">
-  <h2 id="s-patches">A patch is a folder.</h2>
-  <p class="s-lede">A <code>PATCH.md</code> in plain prose, and the diff beside it. It says what the change does, not which lines it touches, so an agent can rebuild it on whatever upstream looks like next.</p>
-  <div class="patch-grid">
-    <figure class="patch-doc">
-      <div class="card">
-        <div class="card-head"><b>.autopatch/context-usage/</b><span>AVGVSTVS96/t3code</span></div>
-        <ul class="files">
-          <li><b>PATCH.md</b><span>what it does and why</span></li>
-          <li>context-usage.patch<span>the diff</span></li>
-        </ul>
-        <div class="prose">
-          <p>Always show the thread's context usage in the composer.</p>
-          <p>Build it on whatever T3 Code shows for context at the time. Right now that's the compact button next to send, which only shows up once a thread gets big: keep it there all the time with the context number, as just the icon, without the "Full"/"Compact" text. Clicking it still makes the next send compact first.</p>
-          <p>If T3 Code knows whether the prompt cache is still warm, say so in the button's tooltip.</p>
-          <p>Once T3 Code shows context usage all the time by default, this patch is done.</p>
-        </div>
+    <div class="card folder">
+      <p class="path">.autopatch/context-usage/</p>
+      <div class="file">
+        <b>PATCH.md</b>
+        <p>Always show the thread's context usage in the composer.</p>
       </div>
-      <figcaption>A real patch from my T3 Code fork. <a href="https://github.com/AVGVSTVS96/t3code/tree/main/.autopatch/context-usage">See it on GitHub</a></figcaption>
-    </figure>
-    <div class="paths">
-      <div class="path">
-        <h3>Changed the code?</h3>
-        <p>Write the PATCH.md, then save the diff.</p>
-        <div class="card term small">
-<pre><span class="p">$</span> autopatch save context-usage
-<span class="o">saved 4 files to .autopatch/context-usage. Commit and push.</span></pre>
-        </div>
-      </div>
-      <div class="path">
-        <h3>Only an idea?</h3>
-        <p>Push just the PATCH.md. The workflow has an agent build it.</p>
-        <div class="card term small">
-<pre><span class="p">$</span> autopatch status
-<span class="o">  context-usage  (not built yet)</span></pre>
-        </div>
+      <div class="file">
+        <b>context-usage.patch</b>
+        <p class="stat"><span class="a">+125</span><span class="d">−94</span><span class="meter" style="--p: 57%"></span></p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="s" id="agents" aria-labelledby="s-agents">
-  <div class="split rev">
-    <div class="card chat">
-      <div class="card-head"><b>your agent</b><span>example</span></div>
-      <div class="chat-body">
-        <p class="you">Fork t3code and always show the thread's context usage in the composer.</p>
-        <ul class="tools">
-          <li><i>Bash</i>npx github:AVGVSTVS96/autopatch fork pingdotgg/t3code</li>
-          <li><i>Edit</i>apps/web/src/components/chat/ComposerPrimaryActions.tsx</li>
-          <li><i>Write</i>.autopatch/context-usage/PATCH.md</li>
-          <li><i>Bash</i>npx github:AVGVSTVS96/autopatch save context-usage</li>
-          <li><i>Bash</i>git add -A &amp;&amp; git commit -m "context-usage" &amp;&amp; git push</li>
-        </ul>
-        <p class="them">Done. The change lives in the context-usage patch, so it's rebuilt if upstream breaks it.</p>
+<section class="s" aria-labelledby="s-forks">
+  <h2 id="s-forks">Forks I use every day.</h2>
+  <div class="forks">
+    <a class="card fork" href="https://github.com/AVGVSTVS96/claude-plugins-official">
+      <p class="up">anthropics/claude-plugins-official</p>
+      <h3>Claude Code plugins</h3>
+      <div class="diff rows">
+        <span class="ln add">A T3 Code channel</span>
+        <span class="ln add">Live voice calls</span>
+        <span class="ln add">A session per Telegram topic</span>
       </div>
-    </div>
+      <p class="n">10 patches</p>
+    </a>
+    <a class="card fork" href="https://github.com/AVGVSTVS96/buzz">
+      <p class="up">block/buzz</p>
+      <h3>Buzz</h3>
+      <div class="diff rows">
+        <span class="ln add">Connect an agent by its key</span>
+        <span class="ln add">Follow a remote agent's logs</span>
+        <span class="ln add">Deploy an agent again after shutdown</span>
+      </div>
+      <p class="n">7 patches</p>
+    </a>
+    <a class="card fork" href="https://github.com/AVGVSTVS96/herdr">
+      <p class="up">herdrdev/herdr</p>
+      <h3>herdr</h3>
+      <div class="diff rows">
+        <span class="ln add">Pane IDs on pane borders</span>
+        <span class="ln add">Updates from the fork's releases</span>
+      </div>
+      <p class="n">4 patches</p>
+    </a>
+  </div>
+</section>
+
+<section class="s" id="start" aria-labelledby="s-start">
+  <h2 id="s-start">Get started.</h2>
+  <div class="ways">
     <div>
-      <h2 id="s-agents">Made for your agent.</h2>
-      <p class="s-lede">Add the skill, and your agent knows how to fork a repo and keep its changes as patches.</p>
+      <h3>With your agent</h3>
       <div class="cmd ghost">
         <code><span class="p">$</span>npx skills add AVGVSTVS96/autopatch</code>
         <button type="button" data-copy="npx skills add AVGVSTVS96/autopatch">copy</button>
       </div>
+      <p>Then ask it to fork something.</p>
     </div>
-  </div>
-</section>
-
-<section class="s" id="updates" aria-labelledby="s-updates">
-  <h2 id="s-updates">Follows releases.</h2>
-  <p class="s-lede">When upstream publishes a release, the workflow rebuilds your fork on it. Nightlies and other pre-releases are skipped. To follow a branch instead, set <code>"follow": "main"</code>.</p>
-  <figure class="releases">
-    <div class="day" aria-hidden="true">
-      <div class="lane pre"><span class="lab">pre-release</span><div class="track"><i style="--at: 3.9"></i><i style="--at: 18.8"></i><i style="--at: 21.7"></i><i style="--at: 23.6"></i><i style="--at: 25.3"></i><i style="--at: 31.8"></i><i style="--at: 42.8"></i><i style="--at: 44.3"></i><i style="--at: 50.9"></i><i style="--at: 57.8"></i><i style="--at: 64.1"></i><i style="--at: 70.3"></i><i style="--at: 70.7"></i><i style="--at: 72.0"></i><i style="--at: 76.4"></i><i style="--at: 79.1"></i><i style="--at: 79.5"></i><i style="--at: 86.0"></i><i style="--at: 92.7"></i><i style="--at: 94.2"></i><i style="--at: 96.3"></i><i style="--at: 102.8"></i><i style="--at: 109.2"></i><i style="--at: 114.0"></i><i style="--at: 115.0"></i><i style="--at: 121.2"></i><i style="--at: 127.7"></i><i style="--at: 134.1"></i><i style="--at: 141.4"></i><i style="--at: 147.7"></i><i style="--at: 155.3"></i><i style="--at: 162.4"></i><i style="--at: 166.1"></i><i style="--at: 172.8"></i><i style="--at: 179.0"></i><i style="--at: 185.6"></i><i style="--at: 192.0"></i><i style="--at: 209.6"></i><i style="--at: 216.2"></i><i style="--at: 221.7"></i><i style="--at: 228.0"></i><i style="--at: 234.8"></i><i style="--at: 240.6"></i><i style="--at: 241.3"></i><i style="--at: 241.6"></i><i style="--at: 247.9"></i><i style="--at: 250.7"></i><i style="--at: 257.1"></i><i style="--at: 261.9"></i><i style="--at: 263.3"></i><i style="--at: 263.6"></i><i style="--at: 264.7"></i><i style="--at: 270.1"></i><i style="--at: 276.8"></i><i style="--at: 283.1"></i><i style="--at: 284.0"></i><i style="--at: 284.4"></i><i style="--at: 284.9"></i><i style="--at: 286.4"></i><i style="--at: 287.1"></i><i style="--at: 288.4"></i><i style="--at: 288.6"></i><i style="--at: 289.9"></i><i style="--at: 290.4"></i><i style="--at: 296.7"></i><i style="--at: 303.0"></i><i style="--at: 309.7"></i><i style="--at: 313.8"></i><i style="--at: 320.1"></i><i style="--at: 326.6"></i><i style="--at: 333.6"></i></div></div>
-      <div class="lane rel"><span class="lab">release</span><div class="track"><i style="--at: 43.2"></i><i style="--at: 44.8"></i><i style="--at: 114.3"></i></div></div>
-      <div class="lane"><span class="lab"></span><div class="hours"><span>Sep 28</span><span>Oct 5</span><span>Oct 12</span></div></div>
-    </div>
-    <figcaption>pingdotgg/t3code over two weeks: 3 releases, which autopatch follows, and 71 nightlies and previews, which it skips.</figcaption>
-  </figure>
-  <dl class="modes">
-    <div class="m-release"><dt><svg><use href="#i-tag"/></svg>Release</dt><dd><b>Your fork is rebuilt on it.</b> Patches that still apply go in with git, and the result is pushed as a signed commit.</dd></div>
-    <div class="m-agent"><dt><svg><use href="#i-agent"/></svg>Agent</dt><dd><b>Only when a release breaks a patch.</b> It rebuilds the patch from its PATCH.md, and your <code>verify</code> command checks the build. If upstream already does what a patch asks, the patch is dropped.</dd></div>
-    <div class="m-check"><dt><svg><use href="#i-git"/></svg>Check</dt><dd><b>Hourly, git only.</b> Between releases it ends in seconds. A failed rebuild isn't retried until upstream or your fork changes.</dd></div>
-  </dl>
-</section>
-
-<section class="s" id="config" aria-labelledby="s-config">
-  <div class="split">
     <div>
-      <h2 id="s-config">Yours to change.</h2>
-      <p class="s-lede"><code>fork</code> and <code>init</code> write <code>.autopatch/config.json</code>. This is the one in my T3 Code fork.</p>
-    </div>
-    <div class="card term">
-      <div class="card-head"><b>.autopatch/config.json</b><span>AVGVSTVS96/t3code</span></div>
-<pre>{
-  <span class="k">"upstream"</span>: <span class="v">"pingdotgg/t3code"</span>,
-  <span class="k">"follow"</span>: <span class="v">"releases"</span>,
-  <span class="k">"verify"</span>: <span class="v">"pnpm install --frozen-lockfile --ignore-scripts &amp;&amp; pnpm --filter @t3tools/web typecheck"</span>
-}</pre>
+      <h3>By hand</h3>
+      <div class="cmd ghost">
+        <code><span class="p">$</span>npx github:AVGVSTVS96/autopatch fork owner/repo</code>
+        <button type="button" data-copy="npx github:AVGVSTVS96/autopatch fork owner/repo">copy</button>
+      </div>
+      <p><a href="https://github.com/AVGVSTVS96/autopatch#commands">Commands and config</a></p>
     </div>
   </div>
-  <dl class="api keys">
-    <div><dt><code>upstream</code></dt><dd><code>owner/repo</code>, or any git URL.</dd></div>
-    <div><dt><code>follow</code></dt><dd><code>releases</code> (upstream's newest release tag, skipping pre-releases) or a branch. Default: <code>releases</code>, or the default branch if upstream has no releases.</dd></div>
-    <div><dt><code>verify</code></dt><dd>The command that checks a build.</dd></div>
-    <div><dt><code>agent</code></dt><dd>The command that rebuilds a patch, prompt on stdin. Default: <code>claude -p --dangerously-skip-permissions</code>. For Codex: <code>codex exec --dangerously-bypass-approvals-and-sandbox</code></dd></div>
-    <div><dt><code>green</code></dt><dd>When following a branch, <code>false</code> takes upstream's newest commit even when its checks failed.</dd></div>
-  </dl>
-  <p class="s-note"><code>.github/workflows/autopatch.yml</code> is yours too: change how often it checks, and set up what <code>verify</code> needs (Node, Bun, Rust) before the autopatch step. The action takes <code>heal: false</code> to apply what still fits without calling the agent, if you want rebuilds on one schedule and heals on another.</p>
 </section>
 
-<section class="s two" aria-label="Commands and history">
-  <div id="commands">
-    <h2 class="sm">Commands</h2>
-    <p class="api-lede"><code>autopatch --help</code> prints this list.</p>
-    <dl class="api">
-      <div><dt><code>fork <i>owner/repo</i></code></dt><dd>Fork it on GitHub, set it up and push.</dd></div>
-      <div><dt><code>init <i>owner/repo</i></code></dt><dd>Set up a fork you already have, from inside it.</dd></div>
-      <div><dt><code>save <i>id</i></code></dt><dd>Save your changes as the patch in <code>.autopatch/&lt;id&gt;</code>.</dd></div>
-      <div><dt><code>status</code></dt><dd>Your patches, and changes no patch holds yet.</dd></div>
-      <div><dt><code>sync</code></dt><dd>Rebuild on upstream; an agent heals what no longer applies.</dd></div>
-    </dl>
-    <h3 class="api-sub">Options for <code>fork</code> and <code>init</code></h3>
-    <dl class="api">
-      <div><dt><code>--follow <i>releases | branch</i></code></dt><dd>What to keep up with. Default: <code>releases</code>, or the default branch if upstream has none.</dd></div>
-      <div><dt><code>--verify <i>command</i></code></dt><dd>The command that checks a build.</dd></div>
-    </dl>
-  </div>
-  <div id="history">
-    <h2 class="sm">History</h2>
-    <ol class="timeline">
-      <li><time>May 2026</time><p><a href="https://github.com/AVGVSTVS96/pi-patcher">pi-patcher</a> keeps patches to the pi coding agent working across updates. Proof of concept.</p></li>
-      <li><time>June</time><p><a href="https://patchmd.vercel.app">PATCH.md</a>, the format.</p></li>
-      <li><time>July</time><p><a href="https://github.com/AVGVSTVS96/herdr">herdr</a>, the first fork rebuilt from patches. Proof of concept.</p></li>
-      <li><time>October</time><p>Forks of <a href="https://github.com/AVGVSTVS96/claude-plugins-official">Claude Code's plugins</a>, <a href="https://github.com/AVGVSTVS96/buzz">Buzz</a> and <a href="https://github.com/AVGVSTVS96/t3code">T3 Code</a>, in daily use.</p></li>
-      <li class="now"><time>October</time><p><a href="https://github.com/AVGVSTVS96/autopatch">autopatch</a>.</p></li>
-    </ol>
-  </div>
+<section class="s" aria-labelledby="s-history">
+  <h2 id="s-history" class="sm">How it got here</h2>
+  <ol class="timeline">
+    <li><time>May</time><a href="https://github.com/AVGVSTVS96/pi-patcher">pi-patcher</a><span>proof of concept</span></li>
+    <li><time>June</time><a href="https://patchmd.vercel.app">PATCH.md</a><span>the format</span></li>
+    <li><time>July</time><a href="https://github.com/AVGVSTVS96/herdr">herdr</a><span>first fork from patches</span></li>
+    <li><time>October</time><span class="b">Forks</span><span>in daily use</span></li>
+    <li class="now"><time>October</time><a href="https://github.com/AVGVSTVS96/autopatch">autopatch</a></li>
+  </ol>
 </section>
 </main>
 </div>
