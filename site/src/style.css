@@ -171,11 +171,18 @@ h3 { font-weight: 600; font-size: 1.125rem; letter-spacing: -0.01em; }
 .term .p { color: var(--add-sign); }
 .term .o { color: var(--ink-3); }
 .term.small pre { padding: 0.9rem 1rem; }
+.term .k { color: var(--ink); }
+.term .v { color: var(--add); }
 
-.patch-grid { margin-top: clamp(2.5rem, 5vw, 3.5rem); display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr) minmax(0, 1fr); gap: 1.25rem; align-items: stretch; }
-.tree-card pre { margin: 0; padding: 1.25rem 1.4rem; font: 400 0.875rem/1.9 var(--mono); white-space: pre; overflow-x: auto; }
-.tree-card .d { color: var(--ink-3); }
-.tree-card b { font-weight: 700; color: var(--add); }
+.patch-grid { margin-top: clamp(2.5rem, 5vw, 3.5rem); display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: clamp(1.25rem, 4vw, 3.5rem); align-items: stretch; }
+.patch-doc { margin: 0; display: grid; gap: 0.85rem; }
+.patch-doc figcaption, .releases figcaption { color: var(--ink-3); font-size: 0.875rem; }
+.patch-doc figcaption a { color: var(--ink-2); }
+.files { list-style: none; margin: 0; padding: 0.9rem 1.5rem; display: grid; gap: 0.35rem; border-bottom: 1px solid var(--hair); font: 400 0.875rem/1.6 var(--mono); color: var(--ink-2); }
+.files li { display: flex; justify-content: space-between; gap: 1rem; }
+.files b { font-weight: 700; color: var(--add); }
+.files span { color: var(--ink-3); font-family: var(--sans); }
+.paths { display: grid; gap: 2rem; align-content: start; }
 .path { display: flex; flex-direction: column; gap: 0.5rem; padding: 1.25rem 0 0; border-top: 1px solid var(--rule); }
 .path p { color: var(--ink-2); }
 .path .card { margin-top: auto; }
@@ -187,27 +194,35 @@ h3 { font-weight: 600; font-size: 1.125rem; letter-spacing: -0.01em; }
 .tools i { font-style: normal; color: var(--add); }
 .them { color: var(--ink); text-wrap: pretty; }
 
-.day { margin-top: clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 0.6rem; }
-.lane { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); align-items: center; gap: 1rem; }
+.releases { margin: clamp(2.5rem, 5vw, 3.5rem) 0 0; display: grid; gap: 1rem; }
+.day { display: grid; gap: 0.6rem; --span: 336; }
+.lane { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); align-items: center; gap: 1rem; }
 .lab { font: 400 0.8125rem/1 var(--mono); color: var(--ink-3); }
 .lane .track { position: relative; height: 2.25rem; background: var(--panel); border: 1px solid var(--hair); }
-.lane .track i { position: absolute; top: 50%; left: calc(0.75rem + var(--at) / 24 * (100% - 1.5rem)); width: 0.75rem; height: 0.75rem; margin: -0.375rem 0 0 -0.375rem; border-radius: 50%; }
-.lane.u .track i { background: var(--ink-3); }
-.lane.h .track i { background: var(--hunk); box-shadow: 0 0 0 4px var(--hunk-bg); }
+.lane .track i { position: absolute; top: 50%; left: calc(0.75rem + var(--at) / var(--span) * (100% - 1.5rem)); }
+.lane.pre .track i { width: 2px; height: 1rem; margin: -0.5rem 0 0 -1px; background: var(--ink-3); opacity: 0.45; }
+.lane.rel .lab { color: var(--add); }
+.lane.rel .track i { width: 0.75rem; height: 0.75rem; margin: -0.375rem 0 0 -0.375rem; border-radius: 50%; background: var(--add-sign); box-shadow: 0 0 0 4px var(--add-bg); }
 .hours { padding-inline: 0.25rem; display: flex; justify-content: space-between; font: 400 0.75rem/1 var(--mono); color: var(--ink-3); }
 .modes { margin: clamp(2rem, 4vw, 3rem) 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 2.5rem); }
 .modes dt { display: flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 1.125rem; }
 .modes svg { width: 1.5rem; height: 1.5rem; padding: 0.2rem; }
-.m-u svg { color: var(--ink-2); background: var(--bg-2); }
-.m-h svg { color: var(--hunk); background: var(--hunk-bg); }
-.m-f svg { color: var(--add); background: var(--add-bg); }
+.m-release svg { color: var(--add); background: var(--add-bg); }
+.m-agent svg { color: var(--hunk); background: var(--hunk-bg); }
+.m-check svg { color: var(--ink-2); background: var(--bg-2); }
 .modes dd { margin: 0.6rem 0 0; color: var(--ink-2); text-wrap: pretty; }
 .modes dd b { color: var(--ink); font-weight: 600; }
 
 .two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2.5rem, 5vw, 5rem); align-items: start; }
 h2.sm { font-size: clamp(1.5rem, 2.4vw, 2rem); margin-bottom: 1.5rem; }
-.api { margin: 0; border-top: 1px solid var(--rule); }
-.api > div { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); gap: 0.35rem 1.5rem; padding: 1rem 0; border-bottom: 1px solid var(--hair); align-items: baseline; }
+.api { margin: 0; border-top: 1px solid var(--rule); display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 1.5rem; }
+.api > div { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; row-gap: 0.35rem; padding: 1rem 0; border-bottom: 1px solid var(--hair); align-items: baseline; }
+.api-lede { margin: -0.75rem 0 1.5rem; color: var(--ink-2); }
+.api-lede code { font-size: 0.86em; background: var(--bg-2); padding: 0.1em 0.35em; }
+.api-sub { margin: 2rem 0 1rem; font-size: 1rem; }
+.api-sub code { font-size: 0.9em; }
+.keys { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+#config .s-note { max-width: 46rem; }
 .api dt code { font: 700 0.9375rem/1.4 var(--mono); }
 .api dt i { font-style: normal; font-weight: 400; color: var(--ink-3); }
 .api dd { margin: 0; color: var(--ink-2); }
@@ -238,18 +253,23 @@ footer { border-top: 1px solid var(--hair); padding-block: 2.5rem 3rem; }
 @media (max-width: 960px) {
   .hero-foot, .split, .split.rev, .show { grid-template-columns: minmax(0, 1fr); }
   .split.rev > .chat { order: 2; }
-  .patch-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .tree-card { grid-column: 1 / -1; }
+  .patch-grid { grid-template-columns: minmax(0, 1fr); }
+  .paths { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.25rem; }
   .modes, .two { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 640px) {
   .bar nav a.opt { display: none; }
   .hero-diff .ln { grid-template-columns: 1ch 1fr; column-gap: 0.5rem; }
-  .patch-grid { grid-template-columns: minmax(0, 1fr); }
-  .api > div, .timeline li { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+  .paths { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .api { grid-template-columns: minmax(0, 1fr); }
+  .api dd code { white-space: normal; overflow-wrap: anywhere; }
+  .timeline li { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; }
+  .files li { flex-direction: column; gap: 0; }
+  .patch-doc .card-head span { display: none; }
   .card-head { white-space: normal; }
   :is(.s-lede, .s-note, .prose) code { white-space: normal; overflow-wrap: anywhere; }
-  .lane { grid-template-columns: 3.25rem minmax(0, 1fr); gap: 0.5rem; }
+  .lane { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
+  .lane .lab:empty { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
