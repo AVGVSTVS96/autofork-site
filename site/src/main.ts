@@ -33,7 +33,7 @@ function draw() {
   const navX = one("nav").x
   const railW = pad - navX
   const T = navX + Math.min(30, railW * 0.28)
-  const B = pad - Math.min(38, railW * 0.32)
+  const B = pad - Math.min(38, Math.max(18, railW * 0.32))
 
   const fork = one("[data-fork]"), you = one("[data-you]"), ask = one("[data-join]"), note = one(".note")
   const top = one("nav").y + one("nav").h + 6
@@ -104,9 +104,14 @@ function draw() {
   svgEl(graph, "path", { class: "reach", d: `M${B + 10} ${ask.y + ask.h / 2}H${ask.x - 4}` })
 
   for (const n of nodes) {
-    const reach = svgEl(graph, "path", { class: "reach", d: `M${B + 8} ${n.y}H${n.x - 18}` })
-    later(reach, n.y)
+    if (n.x - 18 > B + 8) later(svgEl(graph, "path", { class: "reach", d: `M${B + 8} ${n.y}H${n.x - 18}` }), n.y)
     later(svgEl(graph, "circle", { class: "y", cx: B, cy: n.y, r: 7 }), n.y)
+  }
+
+  const band = one(".yours-card")
+  for (const c of graph.querySelectorAll("circle")) {
+    const x = +c.getAttribute("cx")!, y = +c.getAttribute("cy")!
+    if (x > band.x && x < band.x + band.w && y > band.y && y < band.y + band.h) c.classList.add("on-band")
   }
   grow()
 }

@@ -52,6 +52,8 @@ svg.graph { position: absolute; inset: 0; width: 100%; height: 100%; pointer-eve
 .graph .rr { fill: var(--bg); stroke: var(--trunk); stroke-width: 2.5; }
 .graph .y { fill: var(--you); stroke: var(--bg); stroke-width: 3; }
 .graph .head { fill: var(--bg); stroke: var(--you); stroke-width: 2.5; }
+.graph .on-band { stroke: var(--you-soft); }
+.graph .rr.on-band { fill: var(--you-soft); stroke: var(--trunk); }
 .graph .draw { stroke-dasharray: var(--len) var(--len); stroke-dashoffset: var(--len); transition: stroke-dashoffset var(--dur, 900ms) var(--out) var(--delay, 0ms); }
 .graph .draw.in { stroke-dashoffset: 0; }
 .graph .dot-in { r: 0; transition: r 460ms var(--spring) var(--delay, 0ms); }
@@ -210,7 +212,7 @@ h2 { margin: 0; font-size: clamp(34px, 4.4vw, 60px); line-height: 1.02; letter-s
 .t3-foot { display: flex; gap: 2px; padding: 4px 8px 8px; }
 .t3-foot .t3-icon { width: 32px; height: 32px; }
 
-.t3-main { position: relative; display: grid; grid-template-rows: 52px minmax(0, 1fr); min-width: 0; min-height: 0; }
+.t3-main { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 52px minmax(0, 1fr); min-width: 0; min-height: 0; }
 .t3-tabs { display: none; }
 .t3-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 20px; }
 .crumb { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 14px; font-weight: 500; white-space: nowrap; }
@@ -337,7 +339,28 @@ footer .links { display: flex; gap: 22px; }
   nav .links a:not(:last-child) { display: none; }
   .graph-tag { display: none; }
   .ask { --r: 18px; height: auto; flex-wrap: wrap; padding: 8px; }
-  .page { --rail: 34px; }
+  .page { --rail: 42px; --gutter: 16px; }
+  h1 { font-size: min(12.8vw, 60px); }
+  section { padding-top: 96px; }
+  h2 { font-size: 34px; }
+  .line { margin-top: 14px; font-size: 17.5px; }
+  .story { margin-top: 36px; gap: 24px; }
+  .asked { padding: 18px 18px 20px; }
+  .asked p { font-size: 23px; }
+  .t3, .asks { position: relative; margin-left: calc(-1 * var(--rail)); }
+  .t3 { margin-top: 36px; border-radius: 12px; }
+  .asks { margin-top: 12px; gap: 8px; }
+  .asks li { padding: 12px 14px; font-size: 15.5px; }
+  .yours-card { margin-left: calc(-1 * var(--rail)); padding: 28px 18px 24px var(--rail); border-radius: 20px; }
+  .gh { padding: 16px 18px; }
+  .gh-name { font-size: 19px; }
+  .gh-run { flex-wrap: wrap; row-gap: 2px; }
+  .gh-run span { flex-basis: 100%; padding-left: 19px; }
+  .self { padding-top: 20px; }
+  .cmd code { padding: 12px 14px; font-size: 13px; text-overflow: clip; overflow-x: auto; scrollbar-width: none; mask-image: linear-gradient(to left, transparent, #000 20px); }
+  .cmd button { padding: 0 14px; font-size: 14px; }
+  .lineage { margin-top: 32px; }
+  footer { margin-top: 88px; }
   .field { flex-basis: 100%; height: 88px; padding-left: 6px; }
   .typer { flex-wrap: wrap; align-content: center; row-gap: 6px; white-space: normal; padding-right: 6px; }
   .typed { overflow: visible; }
