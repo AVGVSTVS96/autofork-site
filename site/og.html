@@ -36,8 +36,8 @@ svg.g { position: absolute; left: 0; top: 64px; }
 .node { fill: var(--you); }
 
 .row { position: absolute; left: 112px; transform: translateY(-50%); white-space: nowrap; display: flex; flex-direction: column; gap: 4px; }
-.row b { font-size: 26px; font-weight: 700; letter-spacing: -0.015em; color: var(--you); }
-.row small { font: 400 17px "Fragment Mono", monospace; color: var(--ink-3); }
+.row b { font-size: 29px; font-weight: 700; letter-spacing: -0.015em; color: var(--you); }
+.row small { font: 400 19px "Fragment Mono", monospace; color: var(--ink-3); }
 .row.rel { flex-direction: row; gap: 10px; font-size: 19px; }
 .row.rel img { width: 24px; height: 24px; border-radius: 6px; }
 .band { position: absolute; left: 0; right: 0; background: var(--you-soft); }
@@ -63,30 +63,27 @@ svg.g { position: absolute; left: 0; top: 64px; }
     <span class="name"><svg viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm0 2.122a2.25 2.25 0 1 0-1.5 0v.878A2.25 2.25 0 0 0 5.75 8.5h1.5v2.128a2.251 2.251 0 1 0 1.5 0V8.5h1.5a2.25 2.25 0 0 0 2.25-2.25v-.878a2.25 2.25 0 1 0-1.5 0v.878a.75.75 0 0 1-.75.75h-4.5A.75.75 0 0 1 5 6.25v-.878Zm3.75 7.378a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm3-8.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/></svg>you / <b>t3code</b></span>
     <small>follows releases</small>
   </div>
-  <div class="band" style="top:64px;height:170px"></div>
+  <div class="band" style="top:64px;height:132px"></div>
   <svg class="g" width="600" height="500" viewBox="0 0 600 500"><g id="graph"></g></svg>
   <div id="rows"></div>
 </div>
 
 <script>
   const A = 44, B = 82, head = 64, lift = 62
-  const releases = [
-    { y: 124, tag: "v0.0.46", when: "today", note: "kept on top, no agent needed" },
-    { y: 300, tag: "v0.0.45", when: "last week", note: "broke here, <span class=agent>rebuilt by the agent</span>" },
-    { y: 476, tag: "v0.0.44", when: "2 weeks ago", note: "kept on top, no agent needed" },
+  const rows = [
+    { y: 64, title: "4 changes on top", note: "ready for their next release" },
+    { y: 200, title: "every change kept", note: "no agent needed", tag: "+156 commits", when: "Oct 12" },
+    { y: 338, title: "rebuilt by the agent", note: "a change broke on day one", tag: "+383 commits", when: "Oct 10" },
   ]
   const peel = (x1, y1, x2, y2) => `M${x1} ${y1}C${x1} ${(y1 + y2) / 2} ${x2} ${(y1 + y2) / 2} ${x2} ${y2}`
   let g = `<path class="intent" d="M${B} 0V500"/><path class="trunk" d="M${A} 0V500"/>`
-  for (const r of releases) {
-    const y = r.y - lift
-    g += `<path class="yours" d="${peel(A, r.y, B, y + 14)}V${y}"/>`
-    for (const d of [-74, 50, 100]) if (r.y + d > 0 && (d > 0 || r === releases[0])) g += `<circle class="commit" cx="${A}" cy="${r.y + d}" r="5"/>`
-  }
-  for (const r of releases) g += `<circle class="rel" cx="${A}" cy="${r.y}" r="9"/><circle class="node" cx="${B}" cy="${r.y - lift}" r="10"/>`
+  for (const y of [22, 118, 164, 310, 450, 494]) g += `<circle class="commit" cx="${A}" cy="${y}" r="5"/>`
+  for (const r of rows) if (r.tag) g += `<path class="yours" d="${peel(A, r.y + lift, B, r.y + 14)}V${r.y}"/><circle class="rel" cx="${A}" cy="${r.y + lift}" r="9"/>`
+  for (const r of rows) g += `<circle class="node" cx="${B}" cy="${r.y}" r="10"/>`
   document.querySelector("#graph").innerHTML = g
-  document.querySelector("#rows").innerHTML = releases.map((r) => `
-    <div class="row" style="top:${head + r.y - lift}px"><b>always show context usage</b><small>${r.note}</small></div>
-    <div class="row rel" style="top:${head + r.y + 2}px"><span class="tag">${r.tag}</span><img src="/brand/logo/vendor/t3code.png" alt="">${r.when}</div>`).join("")
+  document.querySelector("#rows").innerHTML = rows.map((r) => `
+    <div class="row" style="top:${head + r.y}px"><b>${r.title}</b><small>${r.note}</small></div>
+    ${r.tag ? `<div class="row rel" style="top:${head + r.y + lift + 2}px"><img src="/brand/logo/vendor/t3code.png" alt=""><span class="tag">${r.tag}</span>${r.when}</div>` : ""}`).join("")
 </script>
 </body>
 </html>
