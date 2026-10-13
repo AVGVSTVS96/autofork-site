@@ -142,7 +142,7 @@ const examples = [
   { app: "T3 Code", icon: "t3code", change: "always show context usage" },
   { app: "herdr", icon: "herdr", change: "show each pane's ID on its border" },
   { app: "Ghostty", icon: "ghostty", change: "keep split sizes after a restart" },
-  { app: "Buzz", icon: "buzz", change: "connect an agent that runs somewhere else" },
+  { app: "Buzz", icon: "buzz", change: "let my agents share files with me" },
   { app: "pi", icon: "pi", change: "show what each turn cost" },
   { app: "cmux", icon: "cmux", change: "ping my phone when an agent finishes" },
   { app: "tmux", icon: "tmux", change: "show each agent's state in the status bar" },
