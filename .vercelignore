@@ -1,6 +1,8 @@
 .scratch
 shots
 node_modules
+brand/directions/shots
 brand/node_modules
 site/node_modules
 site/dist
+.vercel.autopatchmd.bak

@@ -5,3 +5,4 @@ dist
 .env*.local
 shots
 .env*
+.vercel.autopatchmd.bak
