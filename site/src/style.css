@@ -380,4 +380,4 @@ footer .links { display: flex; gap: 22px; }
   .graph .draw, .graph .dot-in, .graph-tag, .rel, .rel *, .rel *::after, .wire .fill, .lineage * { transition: none !important; animation: none !important; }
   .caret { animation: none; }
 }
-.asks img[src$=".svg"] { padding: 6px; background: var(--panel-2); }
+.asks img[src$="claude.svg"] { padding: 6px; background: var(--panel-2); }

@@ -54,7 +54,7 @@ svg.g { position: absolute; left: 0; top: 64px; }
 <h1><span>Make it yours.</span><span class="you">Keep their updates.</span></h1>
 
 <div class="ask">
-  <p><span class="badge"><img src="/brand/logo/vendor/t3code.png" alt="">T3 Code</span>always show context usage<span class="caret"></span></p>
+  <p><span class="badge"><img src="/brand/logo/vendor/t3code.svg" alt="">T3 Code</span>always show context usage<span class="caret"></span></p>
   <span class="go">Fork it</span>
 </div>
 
@@ -83,7 +83,7 @@ svg.g { position: absolute; left: 0; top: 64px; }
   document.querySelector("#graph").innerHTML = g
   document.querySelector("#rows").innerHTML = rows.map((r) => `
     <div class="row" style="top:${head + r.y}px"><b>${r.title}</b><small>${r.note}</small></div>
-    ${r.tag ? `<div class="row rel" style="top:${head + r.y + lift + 2}px"><img src="/brand/logo/vendor/t3code.png" alt=""><span class="tag">${r.tag}</span>${r.when}</div>` : ""}`).join("")
+    ${r.tag ? `<div class="row rel" style="top:${head + r.y + lift + 2}px"><img src="/brand/logo/vendor/t3code.svg" alt=""><span class="tag">${r.tag}</span>${r.when}</div>` : ""}`).join("")
 </script>
 </body>
 </html>
