@@ -5,29 +5,88 @@
 <style>
 @font-face { font-family: "Host Grotesk"; src: url("/fonts/host-grotesk.woff2") format("woff2"); font-weight: 300 800; }
 @font-face { font-family: "Fragment Mono"; src: url("/fonts/fragment-mono.woff2") format("woff2"); }
+:root { --bg: #F4F4F6; --panel: #FFFFFF; --ink: #0E0E12; --ink-2: #4D4D57; --ink-3: #6E6E78; --hair: rgb(14 14 18 / .1); --trunk: #CACAD2; --rel: #9A9AA6; --you: #3B2BFF; --you-soft: #EDEBFF; --badge: #F4F4F5; --badge-line: #E4E4E7; }
 html, body { margin: 0; }
-body { width: 1200px; height: 630px; background: #FBFBFC; color: #0E0E12; font-family: "Host Grotesk", sans-serif; position: relative; overflow: hidden; }
-.wm { position: absolute; left: 152px; top: 52px; height: 44px; }
-svg.g { position: absolute; inset: 0; }
-.trunk { stroke: #CACAD2; stroke-width: 4; fill: none; }
-.yours { stroke: #3B2BFF; stroke-width: 4; fill: none; }
-.ring { fill: #FBFBFC; stroke: #CACAD2; stroke-width: 4; }
-.dot { fill: #3B2BFF; }
-h1 { position: absolute; left: 152px; top: 148px; margin: 0; font-size: 108px; line-height: .98; letter-spacing: -0.028em; font-weight: 800; }
-h1 span { display: block; } h1 .you { color: #3B2BFF; }
-.url { position: absolute; right: 64px; top: 62px; font: 400 22px "Host Grotesk", sans-serif; color: #6E6E78; }
+body { width: 1200px; height: 630px; background: var(--bg); color: var(--ink); font-family: "Host Grotesk", sans-serif; position: relative; overflow: hidden; -webkit-font-smoothing: antialiased; }
+
+.wm { position: absolute; left: 64px; top: 60px; height: 40px; }
+h1 { position: absolute; left: 64px; top: 148px; margin: 0; font-size: 74px; line-height: 1.02; letter-spacing: -0.032em; font-weight: 800; }
+h1 span { display: block; } h1 .you { color: var(--you); }
+
+.ask { position: absolute; left: 64px; top: 366px; width: 600px; height: 76px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; padding: 0 11px 0 14px; background: var(--panel); border: 2px solid var(--you); border-radius: 20px; }
+.ask p { margin: 0; font-size: 25px; letter-spacing: -0.012em; white-space: nowrap; display: flex; align-items: center; }
+.badge { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px 0 5px; margin-right: 10px; background: var(--badge); border: 1.5px solid var(--badge-line); border-radius: 11px; font-weight: 600; font-size: 20px; }
+.badge img { width: 28px; height: 28px; border-radius: 7px; display: block; }
+.caret { width: 3px; height: 30px; margin-left: 2px; background: var(--you); border-radius: 1px; }
+.go { height: 52px; padding: 0 20px; border-radius: 11px; background: var(--you); color: #fff; font-size: 20px; font-weight: 700; display: grid; place-items: center; }
+
+.card { position: absolute; left: 724px; top: 124px; width: 600px; height: 560px; background: var(--panel); border: 1.5px solid var(--hair); border-radius: 22px; overflow: hidden; }
+.head { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 26px; border-bottom: 1.5px solid var(--hair); font-size: 20px; color: var(--ink-2); }
+.head .name { display: flex; align-items: center; gap: 10px; }
+.head .name b { color: var(--ink); font-weight: 700; }
+.head .name svg { width: 20px; height: 20px; fill: var(--ink-3); }
+.head small { font: 400 16px "Fragment Mono", monospace; color: var(--ink-3); margin-right: 120px; }
+
+svg.g { position: absolute; left: 0; top: 64px; }
+.trunk { stroke: var(--trunk); stroke-width: 4.5; fill: none; }
+.yours { stroke: var(--you); stroke-width: 4.5; fill: none; }
+.intent { stroke: var(--you); stroke-width: 2.5; stroke-dasharray: 2 7; stroke-linecap: round; fill: none; opacity: .55; }
+.commit { fill: var(--trunk); }
+.rel { fill: var(--panel); stroke: var(--rel); stroke-width: 4; }
+.node { fill: var(--you); }
+
+.row { position: absolute; left: 112px; transform: translateY(-50%); white-space: nowrap; display: flex; flex-direction: column; gap: 4px; }
+.row b { font-size: 26px; font-weight: 700; letter-spacing: -0.015em; color: var(--you); }
+.row small { font: 400 17px "Fragment Mono", monospace; color: var(--ink-3); }
+.row.rel { flex-direction: row; gap: 10px; font-size: 19px; }
+.row.rel img { width: 24px; height: 24px; border-radius: 6px; }
+.band { position: absolute; left: 0; right: 0; background: var(--you-soft); }
+.row .agent { color: var(--you); }
+.row.rel { font: 400 19px "Fragment Mono", monospace; color: var(--ink-3); align-items: center; }
+.tag { padding: 3px 8px; border: 1.5px solid #C4C4CC; border-radius: 6px; color: var(--ink); }
+
+.url { position: absolute; right: 64px; top: 68px; font: 400 21px "Host Grotesk", sans-serif; color: var(--ink-3); }
 </style>
 </head>
 <body>
-<svg class="g" viewBox="0 0 1200 630">
-  <path class="trunk" d="M84 0V630"/>
-  <path class="yours" d="M84 210C84 250 124 270 124 318V630"/>
-  <circle class="ring" cx="84" cy="210" r="10"/>
-  <circle class="dot" cx="124" cy="318" r="10"/>
-  <line x1="74" x2="94" y1="96" y2="96" stroke="#CACAD2" stroke-width="4"/>
-</svg>
 <img class="wm" src="../brand/logo/autofork.svg" alt="">
 <span class="url">autofork.com</span>
 <h1><span>Make it yours.</span><span class="you">Keep their updates.</span></h1>
+
+<div class="ask">
+  <p><span class="badge"><img src="/brand/logo/vendor/t3code.png" alt="">t3code</span>always show context usage<span class="caret"></span></p>
+  <span class="go">Fork it</span>
+</div>
+
+<div class="card">
+  <div class="head">
+    <span class="name"><svg viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm0 2.122a2.25 2.25 0 1 0-1.5 0v.878A2.25 2.25 0 0 0 5.75 8.5h1.5v2.128a2.251 2.251 0 1 0 1.5 0V8.5h1.5a2.25 2.25 0 0 0 2.25-2.25v-.878a2.25 2.25 0 1 0-1.5 0v.878a.75.75 0 0 1-.75.75h-4.5A.75.75 0 0 1 5 6.25v-.878Zm3.75 7.378a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm3-8.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"/></svg>you / <b>t3code</b></span>
+    <small>follows releases</small>
+  </div>
+  <div class="band" style="top:64px;height:170px"></div>
+  <svg class="g" width="600" height="500" viewBox="0 0 600 500"><g id="graph"></g></svg>
+  <div id="rows"></div>
+</div>
+
+<script>
+  const A = 44, B = 82, head = 64, lift = 62
+  const releases = [
+    { y: 124, tag: "v0.0.46", when: "today", note: "kept on top, no agent needed" },
+    { y: 300, tag: "v0.0.45", when: "last week", note: "broke here, <span class=agent>rebuilt by the agent</span>" },
+    { y: 476, tag: "v0.0.44", when: "2 weeks ago", note: "kept on top, no agent needed" },
+  ]
+  const peel = (x1, y1, x2, y2) => `M${x1} ${y1}C${x1} ${(y1 + y2) / 2} ${x2} ${(y1 + y2) / 2} ${x2} ${y2}`
+  let g = `<path class="intent" d="M${B} 0V500"/><path class="trunk" d="M${A} 0V500"/>`
+  for (const r of releases) {
+    const y = r.y - lift
+    g += `<path class="yours" d="${peel(A, r.y, B, y + 14)}V${y}"/>`
+    for (const d of [-74, 50, 100]) if (r.y + d > 0 && (d > 0 || r === releases[0])) g += `<circle class="commit" cx="${A}" cy="${r.y + d}" r="5"/>`
+  }
+  for (const r of releases) g += `<circle class="rel" cx="${A}" cy="${r.y}" r="9"/><circle class="node" cx="${B}" cy="${r.y - lift}" r="10"/>`
+  document.querySelector("#graph").innerHTML = g
+  document.querySelector("#rows").innerHTML = releases.map((r) => `
+    <div class="row" style="top:${head + r.y - lift}px"><b>always show context usage</b><small>${r.note}</small></div>
+    <div class="row rel" style="top:${head + r.y + 2}px"><span class="tag">${r.tag}</span><img src="/brand/logo/vendor/t3code.png" alt="">${r.when}</div>`).join("")
+</script>
 </body>
 </html>
