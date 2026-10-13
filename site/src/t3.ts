@@ -126,6 +126,7 @@ export function mount(root: HTMLElement | null) {
       <div class="t3-foot"><button class="t3-icon" tabindex="-1">${I.gear}</button><button class="t3-icon" tabindex="-1">${I.prs}</button><button class="t3-icon" tabindex="-1">${I.usage}</button></div>
     </aside>
     <div class="t3-main">
+      <div class="t3-tabs">${threads.map((t, i) => `<button class="t3-tab" data-i="${i}">${mono(t.mark, t.hue)}${t.project}</button>`).join("")}</div>
       <header class="t3-head"><span class="crumb"></span><span class="t3-panels"><button class="t3-icon" tabindex="-1">${I.menu}</button><button class="t3-icon" tabindex="-1">${I.bottom}</button><button class="t3-icon" tabindex="-1">${I.side}</button></span></header>
       <div class="t3-lane"><div class="t3-msgs"></div></div>
       <div class="t3-composer">
@@ -145,6 +146,7 @@ export function mount(root: HTMLElement | null) {
     </div>`
 
   const rows = [...root.querySelectorAll<HTMLButtonElement>(".t3-row")]
+  const tabs = [...root.querySelectorAll<HTMLButtonElement>(".t3-tab")]
   const msgs = root.querySelector<HTMLElement>(".t3-msgs")!
   const crumb = root.querySelector<HTMLElement>(".crumb")!
   const ctx = root.querySelector<HTMLButtonElement>(".ctx")!
@@ -165,6 +167,7 @@ export function mount(root: HTMLElement | null) {
     active = i
     const t = threads[i]!
     rows.forEach((r, j) => r.classList.toggle("on", j === i))
+    tabs.forEach((r, j) => r.classList.toggle("on", j === i))
     crumb.innerHTML = `${mono(t.mark, t.hue)}<span class="cp">${t.project}</span><span class="slash">/</span><b>${t.title}</b>`
     branch.textContent = t.branch
     msgs.classList.remove("in")
@@ -177,7 +180,7 @@ export function mount(root: HTMLElement | null) {
     paintCtx()
   }
 
-  rows.forEach((r, i) => r.addEventListener("click", () => i !== active && show(i)))
+  for (const r of [...rows, ...tabs]) r.addEventListener("click", () => +r.dataset.i! !== active && show(+r.dataset.i!))
   ctx.addEventListener("click", () => {
     compact.has(active) ? compact.delete(active) : compact.add(active)
     paintCtx()
