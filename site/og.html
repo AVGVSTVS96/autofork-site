@@ -5,27 +5,27 @@
 <style>
 @font-face { font-family: "Host Grotesk"; src: url("/fonts/host-grotesk.woff2") format("woff2"); font-weight: 300 800; }
 @font-face { font-family: "Fragment Mono"; src: url("/fonts/fragment-mono.woff2") format("woff2"); }
-:root { --bg: #F4F4F6; --panel: #FFFFFF; --ink: #0E0E12; --ink-2: #4D4D57; --ink-3: #6E6E78; --hair: rgb(14 14 18 / .1); --trunk: #CACAD2; --rel: #9A9AA6; --you: #3B2BFF; --you-soft: #EDEBFF; --badge: #F4F4F5; --badge-line: #E4E4E7; }
+:root { --bg: #F4F4F6; --panel: #FFFFFF; --ink: #0E0E12; --ink-2: #4D4D57; --ink-3: #6E6E78; --hair: rgb(14 14 18 / .1); --hair-2: rgb(14 14 18 / .2); --panel-2: #F4F4F6; --trunk: #CACAD2; --rel: #9A9AA6; --you: #3B2BFF; --you-soft: #EDEBFF; }
 html, body { margin: 0; }
-body { width: 1200px; height: 630px; background: var(--bg); color: var(--ink); font-family: "Host Grotesk", sans-serif; position: relative; overflow: hidden; -webkit-font-smoothing: antialiased; }
+body { width: 100vw; height: 100vh; background: var(--bg); color: var(--ink); font-family: "Host Grotesk", sans-serif; position: relative; overflow: hidden; -webkit-font-smoothing: antialiased; }
 
 .wm { position: absolute; left: 64px; top: 60px; height: 40px; }
 h1 { position: absolute; left: 64px; top: 148px; margin: 0; font-size: 74px; line-height: 1.02; letter-spacing: -0.032em; font-weight: 800; }
 h1 span { display: block; } h1 .you { color: var(--you); }
 
-.ask { position: absolute; left: 64px; top: 366px; width: 600px; height: 76px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; padding: 0 11px 0 14px; background: var(--panel); border: 2px solid var(--you); border-radius: 20px; }
+.ask { --r: 20px; --in: 10px; position: absolute; left: 64px; top: 366px; width: 600px; height: 76px; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; padding: var(--in); padding-left: 14px; background: var(--panel); border: 1.5px solid var(--hair-2); border-radius: var(--r); box-shadow: 0 1px 2px rgb(14 14 18 / .04), 0 10px 28px -14px rgb(14 14 18 / .16); }
 .ask p { margin: 0; font-size: 25px; letter-spacing: -0.012em; white-space: nowrap; display: flex; align-items: center; }
-.badge { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px 0 5px; margin-right: 10px; background: var(--badge); border: 1.5px solid var(--badge-line); border-radius: 11px; font-weight: 600; font-size: 20px; }
+.badge { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px 0 5px; margin-right: 10px; background: var(--panel-2); border: 1.5px solid var(--hair-2); border-radius: 11px; font-weight: 600; font-size: 20px; }
 .badge img { width: 28px; height: 28px; border-radius: 7px; display: block; }
 .caret { width: 3px; height: 30px; margin-left: 2px; background: var(--you); border-radius: 1px; }
-.go { height: 52px; padding: 0 20px; border-radius: 11px; background: var(--you); color: #fff; font-size: 20px; font-weight: 700; display: grid; place-items: center; }
+.go { align-self: stretch; padding: 0 22px; border-radius: calc(var(--r) - var(--in)); background: var(--you); color: #fff; font-size: 20px; font-weight: 700; display: grid; place-items: center; }
 
-.card { position: absolute; left: 724px; top: 124px; width: 600px; height: 560px; background: var(--panel); border: 1.5px solid var(--hair); border-radius: 22px; overflow: hidden; }
+.card { position: absolute; left: 724px; right: -124px; top: 124px; height: 560px; background: var(--panel); border: 1.5px solid var(--hair); border-radius: 22px; overflow: hidden; }
 .head { display: flex; align-items: center; justify-content: space-between; height: 64px; padding: 0 26px; border-bottom: 1.5px solid var(--hair); font-size: 20px; color: var(--ink-2); }
 .head .name { display: flex; align-items: center; gap: 10px; }
 .head .name b { color: var(--ink); font-weight: 700; }
 .head .name svg { width: 20px; height: 20px; fill: var(--ink-3); }
-.head small { font: 400 16px "Fragment Mono", monospace; color: var(--ink-3); margin-right: 120px; }
+.head small { font: 400 16px "Fragment Mono", monospace; color: var(--ink-3); margin-right: 162px; }
 
 svg.g { position: absolute; left: 0; top: 64px; }
 .trunk { stroke: var(--trunk); stroke-width: 4.5; fill: none; }
@@ -54,7 +54,7 @@ svg.g { position: absolute; left: 0; top: 64px; }
 <h1><span>Make it yours.</span><span class="you">Keep their updates.</span></h1>
 
 <div class="ask">
-  <p><span class="badge"><img src="/brand/logo/vendor/t3code.png" alt="">t3code</span>always show context usage<span class="caret"></span></p>
+  <p><span class="badge"><img src="/brand/logo/vendor/t3code.png" alt="">T3 Code</span>always show context usage<span class="caret"></span></p>
   <span class="go">Fork it</span>
 </div>
 
