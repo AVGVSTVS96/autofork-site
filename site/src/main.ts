@@ -262,8 +262,15 @@ let loop = 0
 
 const wide = () => matchMedia("(min-width: 861px)").matches
 
+const reset = () => {
+  rels.forEach((r) => r.classList.remove("playing", "played", "seen", "on"))
+  fill.style.width = "0px"
+  void story.offsetWidth
+}
+
 async function tell() {
   const token = ++loop
+  reset()
   while (showing && token === loop) {
     for (const [i, rel] of rels.entries()) {
       if (!showing || token !== loop) return
@@ -277,8 +284,7 @@ async function tell() {
     }
     await wait(2200)
     if (!showing || token !== loop) return
-    rels.forEach((r) => r.classList.remove("played", "seen", "on"))
-    fill.style.width = "0px"
+    reset()
     await wait(900)
   }
 }
