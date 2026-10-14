@@ -140,6 +140,7 @@ addEventListener("scroll", () => requestAnimationFrame(grow), { passive: true })
 
 const examples = [
   { app: "T3 Code", icon: "t3code", change: "always show context usage" },
+  { app: "expo-gpt-live", icon: "expo-gpt-live", change: "call my own assistant instead" },
   { app: "herdr", icon: "herdr", change: "show each pane's ID on its border" },
   { app: "Ghostty", icon: "ghostty", change: "keep split sizes after a restart" },
   { app: "Buzz", icon: "buzz", change: "let my agents share files with me" },
