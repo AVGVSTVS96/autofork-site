@@ -3,11 +3,7 @@ import { defineConfig } from "vite-plus";
 
 const text = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
 
-const site = {
-  app: "https://autofork-app.vercel.app",
-  siteLive: "https://autofork-blond.vercel.app",
-  repoShort: "github.com/AVGVSTVS96/autofork",
-};
+const app = "https://autofork-app.vercel.app";
 
 const logo = () =>
   text("../brand/logo/autofork-classes.svg")
@@ -25,7 +21,7 @@ export default defineConfig({
     {
       name: "facts",
       transformIndexHtml(html) {
-        const facts = { ...JSON.parse(text("../copy/facts.json")), ...site };
+        const facts = { ...JSON.parse(text("../copy/facts.json")), app };
         const get = (path: string) => path.split(".").reduce((at, key) => at?.[key], facts);
         return html
           .replaceAll("<!--logo-->", logo())
